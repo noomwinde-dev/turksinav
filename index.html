@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkçe C1 Seviye Sınav ve Eğitim Platformu</title>
+    <!-- Feuille de style locale (équivalent Tailwind figé, aucune requête réseau) -->
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+
+        /* --- Utilitaires (équivalents Tailwind précompilés en dur) --- */
+        .bg-amber-500 { background-color: #f59e0b; }
+        .bg-emerald-100 { background-color: #d1fae5; }
+        .bg-emerald-50 { background-color: #ecfdf5; }
+        .bg-emerald-50\/50 { background-color: rgba(236, 253, 245, 0.5); }
+        .bg-emerald-500 { background-color: #10b981; }
+        .bg-emerald-600 { background-color: #059669; }
+        .bg-green-100 { background-color: #dcfce7; }
+        .bg-green-50 { background-color: #f0fdf4; }
+        .bg-red-100 { background-color: #fee2e2; }
+        .bg-red-50 { background-color: #fef2f2; }
+        .bg-slate-100 { background-color: #f1f5f9; }
+        .bg-slate-200 { background-color: #e2e8f0; }
+        .bg-slate-50 { background-color: #f8fafc; }
+        .bg-white { background-color: #ffffff; }
+        .border-emerald-500 { border-color: #10b981; }
+        .border-green-500 { border-color: #22c55e; }
+        .border-red-500 { border-color: #ef4444; }
+        .border-slate-100 { border-color: #f1f5f9; }
+        .border-slate-200 { border-color: #e2e8f0; }
+        .border-slate-300 { border-color: #cbd5e1; }
+        html.dark .dark\:bg-emerald-900\/10 { background-color: rgba(6, 78, 59, 0.1); }
+        html.dark .dark\:bg-emerald-900\/30 { background-color: rgba(6, 78, 59, 0.3); }
+        html.dark .dark\:bg-emerald-900\/40 { background-color: rgba(6, 78, 59, 0.4); }
+        html.dark .dark\:bg-green-900\/20 { background-color: rgba(20, 83, 45, 0.2); }
+        html.dark .dark\:bg-green-900\/40 { background-color: rgba(20, 83, 45, 0.4); }
+        html.dark .dark\:bg-red-900\/20 { background-color: rgba(127, 29, 29, 0.2); }
+        html.dark .dark\:bg-red-900\/40 { background-color: rgba(127, 29, 29, 0.4); }
+        html.dark .dark\:bg-slate-700 { background-color: #334155; }
+        html.dark .dark\:bg-slate-800 { background-color: #1e293b; }
+        html.dark .dark\:bg-slate-900 { background-color: #0f172a; }
+        html.dark .dark\:bg-slate-900\/50 { background-color: rgba(15, 23, 42, 0.5); }
+        html.dark .dark\:bg-slate-900\/60 { background-color: rgba(15, 23, 42, 0.6); }
+        html.dark .dark\:border-slate-600 { border-color: #475569; }
+        html.dark .dark\:border-slate-700 { border-color: #334155; }
+        html.dark .dark\:border-slate-800 { border-color: #1e293b; }
+        html.dark .dark\:hover\:bg-slate-600:hover { background-color: #475569; }
+        html.dark .dark\:hover\:border-emerald-500:hover { border-color: #10b981; }
+        html.dark .dark\:text-emerald-400 { color: #34d399; }
+        html.dark .dark\:text-green-200 { color: #bbf7d0; }
+        html.dark .dark\:text-green-300 { color: #86efac; }
+        html.dark .dark\:text-red-200 { color: #fecaca; }
+        html.dark .dark\:text-red-300 { color: #fca5a5; }
+        html.dark .dark\:text-slate-100 { color: #f1f5f9; }
+        html.dark .dark\:text-slate-200 { color: #e2e8f0; }
+        html.dark .dark\:text-slate-300 { color: #cbd5e1; }
+        html.dark .dark\:text-slate-400 { color: #94a3b8; }
+        html.dark .dark\:text-slate-500 { color: #64748b; }
+        .hover\:bg-amber-600:hover { background-color: #d97706; }
+        .hover\:bg-emerald-700:hover { background-color: #047857; }
+        .hover\:bg-slate-200:hover { background-color: #e2e8f0; }
+        .hover\:border-emerald-500:hover { border-color: #10b981; }
+        .text-emerald-600 { color: #059669; }
+        .text-green-600 { color: #16a34a; }
+        .text-green-700 { color: #15803d; }
+        .text-green-900 { color: #14532d; }
+        .text-red-600 { color: #dc2626; }
+        .text-red-700 { color: #b91c1c; }
+        .text-red-900 { color: #7f1d1d; }
+        .text-slate-400 { color: #94a3b8; }
+        .text-slate-500 { color: #64748b; }
+        .text-slate-600 { color: #475569; }
+        .text-slate-700 { color: #334155; }
+        .text-slate-800 { color: #1e293b; }
+        .text-white { color: #ffffff; }
+        .block { display: block; }
+        .flex { display: flex; }
+        .inline-block { display: inline-block; }
+        .inline-flex { display: inline-flex; }
+        .hidden { display: none; }
+        .flex-col { flex-direction: column; }
+        .flex-wrap { flex-wrap: wrap; }
+        .flex-shrink-0 { flex-shrink: 0; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .sticky { position: sticky; }
+        .top-0 { top: 0; }
+        .z-50 { z-index: 50; }
+        .overflow-hidden { overflow: hidden; }
+        .cursor-pointer { cursor: pointer; }
+        .cursor-not-allowed { cursor: not-allowed; }
+        .text-center { text-align: center; }
+        .italic { font-style: italic; }
+        .uppercase { text-transform: uppercase; }
+        .list-disc { list-style-type: disc; }
+        .min-h-screen { min-height: 100vh; }
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+        .w-0 { width: 0; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .p-2 { padding: 0.5rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .p-8 { padding: 2rem; }
+        .px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+        .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+        .pt-2 { padding-top: 0.5rem; }
+        .pt-4 { padding-top: 1rem; }
+        .pt-6 { padding-top: 1.5rem; }
+        .pl-5 { padding-left: 1.25rem; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-12 { margin-top: 3rem; }
+        .my-8 { margin-top: 2rem; margin-bottom: 2rem; }
+        .ml-3 { margin-left: 0.75rem; }
+        .mr-1\.5 { margin-right: 0.375rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .gap-1\.5 { gap: 0.375rem; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .space-x-3 > * + * { margin-left: 0.75rem; }
+        .space-y-1 > * + * { margin-top: 0.25rem; }
+        .space-y-3 > * + * { margin-top: 0.75rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .space-y-8 > * + * { margin-top: 2rem; }
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-base { font-size: 1rem; line-height: 1.5rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .font-black { font-weight: 900; }
+        .leading-relaxed { line-height: 1.625; }
+        .leading-tight { line-height: 1.25; }
+        .tracking-wider { letter-spacing: 0.05em; }
+        .border { border-width: 1px; border-style: solid; }
+        .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+        .border-t { border-top-width: 1px; border-top-style: solid; }
+        .border-dashed { border-style: dashed; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-2xl { border-radius: 1rem; }
+        .rounded-full { border-radius: 9999px; }
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); }
+        .w-4 { width: 1rem; }
+        .w-5 { width: 1.25rem; }
+        .h-2 { height: 0.5rem; }
+        .h-4 { height: 1rem; }
+        .h-5 { height: 1.25rem; }
+        .max-w-4xl { max-width: 56rem; }
+        .max-w-md { max-width: 28rem; }
+        .opacity-50 { opacity: 0.5; }
+        .opacity-60 { opacity: 0.6; }
+        .transition { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .duration-300 { transition-duration: 300ms; }
+        .duration-500 { transition-duration: 500ms; }
+        .focus\:ring-emerald-500:focus { outline: none; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5); }
+        @media (min-width: 640px) { .sm\:flex-row { flex-direction: row; } }
+        @media (min-width: 768px) { .md\:p-8 { padding: 2rem; } .md\:text-lg { font-size: 1.125rem; line-height: 1.75rem; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-emerald-600 text-white p-2 rounded-xl font-bold tracking-wider text-sm shadow-md">C1</div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">Türkçe Dil Yeterlilik Sınavı</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Gelişmiş Yargı Çıkarma ve Hata Analizi Platformu</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button id="review-mistakes-tab" onclick="toggleReviewMode()" class="hidden bg-amber-500 hover:bg-amber-600 text-white font-medium px-4 py-2 rounded-xl text-xs transition shadow-sm flex items-center gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    Hataları İncele (<span id="mistake-count-badge">0</span>)
+                </button>
+                <button id="export-btn" onclick="exportData()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition" title="İlerlemeyi Dışa Aktar (.json)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                </button>
+                <label for="import-file-input" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition cursor-pointer" title="Yedekten İçe Aktar (.json)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                </label>
+                <input type="file" id="import-file-input" accept="application/json" class="hidden" onchange="importDataFile(this)">
+                <button id="reset-progress-btn" onclick="if(confirm('Kayıtlı ilerleme silinsin mi?')) resetProgress();" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition" title="İlerlemeyi Sıfırla">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition" title="Tema Değiştir">
+                    <svg id="theme-icon-light" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    <svg id="theme-icon-dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- Dashboard / Stats Bar -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h2 id="section-title" class="text-xl font-bold">C1 Düzeyi Sınav Oturumu (5 Soruluk Seri)</h2>
+                <p id="section-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-1">Sıralı ilerleme: veri tabanındaki 55 sorudan devam ediyorsunuz.</p>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="text-center">
+                    <span class="block text-2xl font-black text-emerald-600 dark:text-emerald-400" id="score-display">0 / 5</span>
+                    <span class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Oturum Skoru</span>
+                </div>
+                <button id="new-series-btn" onclick="startNewSeries()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-5 py-2.5 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Yeni Seri Başlat
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full mb-8 overflow-hidden">
+            <div id="progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-500"></div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="space-y-8">
+            <!-- Questions injected via JS -->
+        </div>
+
+        <!-- Completion Modal / Summary -->
+        <div id="completion-card" class="hidden bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg border border-slate-200 dark:border-slate-700 text-center space-y-4 my-8">
+            <div class="inline-flex p-4 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 rounded-full text-3xl mb-2">🏆</div>
+            <h3 class="text-2xl font-bold">Seri Başarıyla Tamamlandı!</h3>
+            <p id="completion-message" class="text-slate-600 dark:text-slate-300 max-w-md mx-auto"></p>
+            <div class="flex justify-center gap-4 pt-2">
+                <button onclick="startNewSeries()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 rounded-xl shadow-md transition">
+                    Yeni Seri Yükle
+                </button>
+                <button id="review-trigger-btn" onclick="toggleReviewMode()" class="hidden bg-amber-500 hover:bg-amber-600 text-white font-medium px-6 py-3 rounded-xl shadow-md transition">
+                    Hatalı Soruları İncele (<span id="modal-mistake-count">0</span>)
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-slate-400 dark:text-slate-500 border-t border-slate-200 dark:border-slate-800 mt-12">
+        Türkçe Dil Yeterlilik Sınavı (C1) Genişletilmiş Akıllı Eğitim Platformu &bull; Sürekli Gelişim Modülü
+    </footer>
+
+    <!-- JavaScript Application Logic with Expanded C1 Database -->
+    <script>
+        // --- Theme Toggle Logic ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const iconLight = document.getElementById('theme-icon-light');
+        const iconDark = document.getElementById('theme-icon-dark');
+
+        function setTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                iconLight.classList.remove('hidden');
+                iconDark.classList.add('hidden');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                iconLight.classList.add('hidden');
+                iconDark.classList.remove('hidden');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            setTheme(!document.documentElement.classList.contains('dark'));
+        });
+
+        // --- Expanded C1 Question Database (Dozlerce Soru Kapasitesi) ---
+        const masterQuestionDatabase = [
+            {
+                id: 111,
+                levelText: "Seviye: C1 (Meteoroloji & Toplum)",
+                sentence: "Meteoroloji Genel Müdürlüğü, İstanbul'u pazar sabahından itibaren etkisi altına alan yoğun kar yağışının hafta içinde de etkisini artırarak devam edeceğini ve bu durumun ana yollarda trafiği aksatabileceğini açıkladı.",
+                choices: {
+                    A: "Yetkililer yoğun kar yağışının İstanbul'da bir süre daha etkili olacağını belirtiyor.",
+                    B: "Yoğun kar yağışı nedeniyle insanların toplu taşıma araçlarını kullanmaları öneriliyor.",
+                    C: "Hafta içinde kar yağışının ülke genelinde giderek etkisini artıracağı tahmin ediliyor."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Etkisi altına almak", definition: "Bir durumun bir yeri veya olayı kapsamına alması, üzerinde etkili olması." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (A), yetkililerin kar yağışının İstanbul'da etkisini bir süre daha sürdüreceği açıklamasını doğrudan yansıtır.",
+                    trapB: "B seçeneği metinde yer almayan bir öneriyi (toplu taşıma kullanımı) varsayarak 'metinde olmayan bilgi' tuzağı kurar.",
+                    trapC: "C seçeneği ise etkinin yalnızca İstanbul'da değil 'ülke genelinde' olacağını iddia ederek kapsamı yanlış genişletir."
+                }
+            },
+            {
+                id: 112,
+                levelText: "Seviye: C1 (Çevre & Afet Yönetimi)",
+                sentence: "Antalya'nın Kaş ilçesindeki orman yangını, aynı bölgede daha önce yaşanan yangınların aksine kısa sürede kontrol altına alınırken yangının çıkış nedeniyle ilgili yetkililerce inceleme başlatıldı.",
+                choices: {
+                    A: "Orman yangını kısa süre içinde söndürülmüştür.",
+                    B: "Kaş'ın farklı yerlerinde de orman yangınları görülmüştür.",
+                    C: "Orman yangınına neyin yol açtığı araştırılmaktadır."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "Kontrol altına almak", definition: "Bir olayı veya durumu yönetilebilir hale getirmek, yayılmasını durdurmak." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (C), metnin ana yargısı olan 'yangının çıkış nedeniyle ilgili... inceleme başlatıldı' ifadesini birebir yansıtır.",
+                    trapA: "A seçeneği 'kontrol altına alınma' ile 'söndürülme' kavramlarını eş anlamlı sayarak küçük ama önemli bir anlam kaymasına yol açar.",
+                    trapB: "B seçeneği metinde bahsedilmeyen başka yangınların varlığını öne sürerek 'metinde olmayan bilgi' tuzağı kurar."
+                }
+            },
+            {
+                id: 113,
+                levelText: "Seviye: C1 (Tarım & İklim)",
+                sentence: "Afrika ve Asya'daki çiftçilerin iki kat ürün almasını sağlamak amacıyla iklim değişikliklerine ve bitki hastalıklarına dirençli yeni fasulye türleri geliştirildi.",
+                choices: {
+                    A: "Afrika ve Asya'da en fazla tüketilen besin maddesi fasulyedir.",
+                    B: "Bazı fasulye türleri iklim ve hastalıklardan daha çok etkileniyor.",
+                    C: "İklim değişiklikleri bitki türlerinin yok olmasına sebep olmaktadır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Dirençli", definition: "Olumsuz koşullara karşı dayanıklı, kolayca etkilenmeyen." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), yeni türlerin dirençli olarak geliştirilmesinden, var olan türlerin daha kolay etkilendiği sonucunun çıkarılabileceğini yansıtır.",
+                    trapA: "A seçeneği metinde hiç geçmeyen bir tüketim istatistiği iddiasıyla 'metinde olmayan bilgi' tuzağı kurar.",
+                    trapC: "C seçeneği iklim değişikliğinin türlerin tamamen yok olmasına yol açtığını iddia ederek metni aşırı genelleştirir."
+                }
+            },
+            {
+                id: 114,
+                levelText: "Seviye: C1 (Sanat & Tiyatro)",
+                sentence: "Kurulduğu günden bugüne yenilikçi anlayışı ve sergilediği oyunlarla ses getiren Tiyatro Akademi, deneyimli kadrosuyla yeni dönemde oldukça farklı bir projeyle izleyicilerinin karşısına çıkıyor.",
+                choices: {
+                    A: "Akademi, yeni dönemde farklı bir kadroyla yoluna devam edecektir.",
+                    B: "Tiyatro Akademi her yeni sezonda farklı oyunlar sergilemektedir.",
+                    C: "Kuruluşundan bu yana sergilediği oyunlarla dikkat çekmektedir."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "Ses getirmek", definition: "Dikkat çekmek, tanınır ve bilinir hale gelmek." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (C), 'kurulduğu günden bugüne... sergilediği oyunlarla ses getiren' ifadesini doğrudan özetler.",
+                    trapA: "A seçeneği metindeki 'farklı bir proje' ifadesini 'farklı bir kadro' ile karıştırır; oysa metin deneyimli kadronun devam ettiğini belirtir.",
+                    trapB: "B seçeneği 'her sezon' gibi metinde olmayan bir sıklık iddiasıyla aşırı genelleme yapar."
+                }
+            },
+            {
+                id: 115,
+                levelText: "Seviye: C1 (Kültür & Sanat Etkinlikleri)",
+                sentence: "Yerli ve yabancı toplam 25 galerinin katılımıyla ABC Sanatevi'nde düzenlenen 4. Uluslararası Resim Sergisi'nde yaklaşık iki bin tabloyu görme fırsatı yakalayan ziyaretçiler bu yıl da resim, heykel ve afiş tasarımı yarışmalarıyla eğlenceli vakit geçirdi.",
+                choices: {
+                    A: "Sergide ziyaretçilerin yaptığı resim, heykel ve afişler sergilendi.",
+                    B: "Sergide daha önceki yıllarda da çeşitli yarışmalar yapıldı.",
+                    C: "Sergi, 25 galeri ve ABC Sanatevi'nde eş zamanlı düzenlendi."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Katılım", definition: "Bir etkinliğe dahil olma, iştirak etme." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), 'bu yıl da' ifadesinden önceki yıllarda da benzer yarışmaların yapıldığı sonucunun çıkarılabileceğini yansıtır.",
+                    trapA: "A seçeneği ziyaretçilerin kendi eserlerinin sergilendiğini iddia eder; oysa ziyaretçiler yarışmalarla eğlenmiştir.",
+                    trapC: "C seçeneği sergi ve galerilerin ayrı ayrı eş zamanlı düzenlendiğini iddia ederek metindeki 'galerilerin katılımıyla' ifadesini çarpıtır."
+                }
+            },
+            {
+                id: 116,
+                levelText: "Seviye: C1 (Kültür & Müzecilik)",
+                sentence: "Yapımı bittiğinde dünyanın en büyük arkeoloji müzeleri arasında yerini alacak olan Hatay Arkeoloji Müzesi'nin tamamlanan birinci bölümünde, Taş Devri'nden günümüze kadarki yaklaşık 36 bin eserin yarısından fazlasını üç boyutlu olarak görmek mümkün.",
+                choices: {
+                    A: "Dünyanın en büyük arkeoloji müzesi unvanını Hatay Arkeoloji Müzesi almıştır.",
+                    B: "Henüz bir kısmı tamamlanan müzede Taş Devri'nden eserler bulunmaktadır.",
+                    C: "Müzedeki 36 bin Taş Devri eseri üç boyutlu olarak birinci bölümde sergilenmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Üç boyutlu", definition: "Genişlik, yükseklik ve derinliği olan, hacimli." }
+                ],
+                analysis: {
+                    right: "B seçeneği doğrudur. Metinde müzenin henüz tamamen tamamlanmadığı, yalnızca birinci bölümünün tamamlandığı ve bu bölümde Taş Devri'nden günümüze kadar uzanan eserlerin bulunduğu belirtilmektedir.",
+                    trapA: "A seçeneği yanlıştır. Metinde Hatay Arkeoloji Müzesi'nin dünyanın en büyük arkeoloji müzesi olduğu söylenmemektedir. Müzenin yapımı tamamlandığında dünyanın en büyük arkeoloji müzeleri arasında yer alacağı belirtilmektedir.",
+                    trapC: "C seçeneği yanlıştır. Metinde yaklaşık 36 bin eserin yarısından fazlasının üç boyutlu olarak görülebileceği belirtilmektedir. Ancak C seçeneğinde 36 bin Taş Devri eserinin üç boyutlu olarak sergilendiği söylenmektedir. Bu nedenle eserlerin sayısı ve dönemi yanlış aktarılmıştır."
+                }
+            },
+            {
+                id: 117,
+                levelText: "Seviye: C1 (Sinema & Popüler Kültür)",
+                sentence: "Dünyanın 70 ülkesinde aynı tarihte gösterime giren \"Yıldız Savaşları\" filmi, Türkiye'de 550 bin izleyicisi ve 8 milyon lira geliriyle son yıllarda en çok izlenen yabancı film olsa da \"Düğün Dernek\" adlı Türk filminin izleyici ve gelir rekorunu kıramadı.",
+                choices: {
+                    A: "Düğün Dernek adlı film yerli yapım olduğu için rekor kırmıştır.",
+                    B: "Yıldız Savaşları filminin toplam kazancı 8 milyon liradır.",
+                    C: "Düğün Dernek adlı filmin izleyici sayısı 550 binden fazladır."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "Gösterime girmek", definition: "Bir filmin sinemalarda izleyiciyle buluşmaya başlaması." }
+                ],
+                analysis: {
+                    right: "C seçeneği doğrudur. Metinde Yıldız Savaşları filminin Türkiye'de 550 bin izleyiciye ulaşmasına rağmen Düğün Dernek filminin izleyici ve gelir rekorunu kıramadığı belirtilmektedir. Buna göre Düğün Dernek filminin izleyici sayısının 550 binden fazla olduğu anlaşılmaktadır.",
+                    trapA: "A seçeneği yanlıştır. Metinde Düğün Dernek filminin rekor kırmasının yerli yapım olmasıyla ilgili olduğu söylenmemektedir. Bu, metinde bulunmayan bir nedendir.",
+                    trapB: "B seçeneği yanlıştır. Metinde belirtilen 8 milyon liralık gelir, Yıldız Savaşları filminin Türkiye'deki geliridir. Filmin dünya genelindeki toplam gelirinin 8 milyon lira olduğu söylenmemektedir."
+                }
+            },
+            {
+                id: 118,
+                levelText: "Seviye: C1 (Sağlık & Beslenme)",
+                sentence: "Doktorlara göre 2 yaş altındaki bebeklerin ve 70 yaş üzeri kişilerin bağışıklık sisteminin güçlenmesi ve hastalıklara karşı daha dirençli olmaları için hazır su yerine daha fazla kalsiyum içeren musluk suyu tüketmeleri gerekiyor.",
+                choices: {
+                    A: "Bebekler ve yaşlılar daha sağlıklı olmak için sudaki kalsiyuma ihtiyaç duyuyorlar.",
+                    B: "Yaş ilerledikçe musluk suyundaki kalsiyuma duyulan ihtiyaç artıyor.",
+                    C: "2-70 yaş aralığındaki insanların hastalıktan korunmak için hazır su tüketmeleri öneriliyor."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Bağışıklık sistemi", definition: "Vücudu hastalıklara karşı koruyan doğal savunma mekanizması." }
+                ],
+                analysis: {
+                    right: "A seçeneği doğrudur. Metinde 2 yaşından küçük bebeklerin ve 70 yaşından büyük kişilerin bağışıklık sistemlerini güçlendirmek ve hastalıklara karşı daha dirençli olmak için daha fazla kalsiyum içeren musluk suyu tüketmeleri gerektiği belirtilmektedir.",
+                    trapB: "B seçeneği yanlıştır. Metinde yaş ilerledikçe musluk suyundaki kalsiyuma duyulan ihtiyacın arttığı söylenmemektedir. Bu ihtiyaç özellikle 2 yaşından küçük bebekler ve 70 yaşından büyük kişiler için belirtilmiştir.",
+                    trapC: "C seçeneği yanlıştır. Metinde 2-70 yaş aralığındaki insanların hastalıklardan korunmak için hazır su tüketmeleri gerektiğine dair herhangi bir bilgi bulunmamaktadır."
+                }
+            },
+            {
+                id: 119,
+                levelText: "Seviye: C1 (Edebiyat & Kültürel Etkinlik)",
+                sentence: "Ünlü şair Orhan Veli anısına bu yıl ilk kez düzenlenen \"Altın Kalem Şiir Yarışması\"nı kazanan altı genç şaire, 26 Ocak'ta İstanbul Sanat Merkezi'nde gerçekleştirilecek törende Kültür Bakanı tarafından ödülleri verilecek.",
+                choices: {
+                    A: "Orhan Veli'nin şiirlerinin okunduğu törende altı şaire ödül verilecek.",
+                    B: "Altın Kalem Şiir Yarışması'nın ilki 26 Ocak'ta gerçekleştirildi.",
+                    C: "Orhan Veli adına düzenlenen yarışmada genç şairler ödülü hak etti."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "Anısına düzenlemek", definition: "Bir kişiyi hatırlamak amacıyla bir etkinlik tertiplemek." }
+                ],
+                analysis: {
+                    right: "C seçeneği doğrudur. Metinde Altın Kalem Şiir Yarışması'nın ünlü şair Orhan Veli'nin anısına düzenlendiği ve yarışmayı kazanan altı genç şaire ödül verileceği belirtilmektedir. Bu nedenle yarışmanın Orhan Veli adına düzenlendiği söylenebilir.",
+                    trapA: "A seçeneği yanlıştır. Metinde Orhan Veli'nin şiirlerinin törende okunacağına dair bir bilgi bulunmamaktadır. Yarışmanın Orhan Veli'nin anısına düzenlendiği belirtilmektedir.",
+                    trapB: "B seçeneği yanlıştır. Metinde yarışmanın 26 Ocak'ta yapılmış olduğu söylenmemektedir. 26 Ocak'ta gerçekleştirilecek olan şey, yarışmayı kazanan altı genç şaire ödüllerinin verileceği törendir."
+                }
+            },
+            {
+                id: 120,
+                levelText: "Seviye: C1 (Doğal Afet & Uyarı Sistemleri)",
+                sentence: "Yetkililer Kastamonu'nun Taşköprü ilçesinde üç gündür aralıksız süren yağmurun, çevredeki karların hızla erimesine neden olduğunu ve bunun sonucunda oluşabilecek su baskını ve toprak kayması gibi olumsuz durumlara karşı tedbir alınması gerektiğini belirtti.",
+                choices: {
+                    A: "Artan kar yağışı hayatı olumsuz etkileyebileceği için tedbirli olmak gerekiyor.",
+                    B: "Bir süredir yağan yağmur su baskını ve toprak kaymasına neden olabilir.",
+                    C: "Yaşanabilecek olası bir su baskınının Taşköprü çevresindeki karları eritebileceği belirtiliyor."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Aralıksız", definition: "Durmadan, kesintisiz biçimde devam eden." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), sürekli yağan yağmurun su baskını ve toprak kaymasına yol açabileceği uyarısını doğru yansıtır.",
+                    trapA: "A seçeneği nedeni 'artan kar yağışı' olarak gösterir; oysa metindeki asıl neden aralıksız yağan yağmurun karları eritmesidir.",
+                    trapC: "C seçeneği su baskınının karları eriteceğini iddia ederek metindeki neden-sonuç ilişkisini tersine çevirir; asıl olan yağmurun karları eritmesidir."
+                }
+            },
+            {
+                id: 121,
+                levelText: "Seviye: C1 (Doğa & Ekoturizm)",
+                sentence: "Asya ve Avrupa kıtaları arasındaki göç yolu üzerinde bulunan Balıkesir'deki Manyas Kuş Cenneti, göç eden kuşlara ev sahipliği yapmasının yanında farklı kuş türlerini görmek isteyen doğaseverlerin akın ettiği bir millî park.",
+                choices: {
+                    A: "Manyas Kuş Cenneti, kuşların kıtalar arası göçlerinde konakladıkları yerdir.",
+                    B: "Farklı kuş türlerinin anavatanı olan Manyas Kuş Cenneti, bir millî parktır.",
+                    C: "Manyas Kuş Cenneti'nin, Asya ve Avrupalı pek çok doğasever ziyaretçisi vardır."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Akın etmek", definition: "Bir yere kalabalık hâlde ve yoğun biçimde gitmek." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (A), göç yolu üzerinde bulunan parkın göçmen kuşlara konaklama imkânı sağladığı bilgisini doğru aktarır.",
+                    trapB: "B seçeneği parkı kuşların 'anavatanı' ilan ederek metinde yer almayan bir köken iddiası oluşturur.",
+                    trapC: "C seçeneği ziyaretçilerin yalnızca 'Asyalı ve Avrupalı' olduğunu belirterek metinde geçmeyen bir sınırlama getirir."
+                }
+            },
+            {
+                id: 122,
+                levelText: "Seviye: C1 (Bilim & Tıp)",
+                sentence: "İnsan genleri üzerinde yaptığı çalışmayla Nobel Kimya Ödülü'ne layık görülen ilk Türk bilim insanı Aziz Sancar ile Amerikalı ve İsveçli bilim insanlarından oluşan ekibinin buluşu, tıp dünyasında pek çok zor hastalığın tedavisi için umut kaynağı.",
+                choices: {
+                    A: "Aziz Sancar ve ekibinin buluşu tıp dünyasında tedavi amaçlı kullanılabilecek.",
+                    B: "Aziz Sancar, kimya alanında Nobel Ödülü'nü alan Türk bilim insanlarından biridir.",
+                    C: "Amerikalı ve İsveçli bilim insanları tarafından Aziz Sancar'a Nobel Kimya Ödülü verildi."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Umut kaynağı olmak", definition: "Bir gelişmenin gelecekte iyi sonuçlar doğurabileceğine dair beklenti yaratması." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (A), ekibin buluşunun tıp dünyasında tedavi amaçlı kullanılabileceği vurgusunu doğru biçimde yansıtır.",
+                    trapB: "B seçeneği Aziz Sancar'ı Nobel'i alan 'birçok Türk bilim insanından biri' olarak sunar; oysa metin onun 'ilk' olduğunu belirtir.",
+                    trapC: "C seçeneği ödülün yalnızca Amerikalı ve İsveçli bilim insanlarınca verildiğini ima ederek Aziz Sancar'ın da ödül sahibi olduğu gerçeğini göz ardı eder."
+                }
+            },
+            {
+                id: 123,
+                levelText: "Seviye: C1 (Enerji & Spor Tesisleri)",
+                sentence: "Antalya'da yapımı sonlanan 13 bin metrekarelik güneş enerjisi paneline sahip dünyanın en büyük stadyumu olan \"Arena\", kendi enerjisini üretmekle kalmayacak, çevresindeki 550 konutun da elektrik ihtiyacını karşılayacak.",
+                choices: {
+                    A: "Antalya'da 550 konut üzerine yerleştirilen güneş panelleri elektrik enerjisi üretecek.",
+                    B: "Arena stadyumu, Antalya'da on üç bin metrekarelik bir alanda inşa ediliyor.",
+                    C: "İhtiyacı olan elektrik enerjisini kendi karşılayacak olan Arena tamamlandı."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "İhtiyacı karşılamak", definition: "Gerekli olan bir şeyi yeterli miktarda sağlamak." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (C), stadyumun tamamlandığını ve kendi elektrik ihtiyacını karşılayacağını doğru biçimde özetler.",
+                    trapA: "A seçeneği panellerin 550 konut üzerine yerleştirildiğini iddia eder; oysa paneller stadyumdadır, elektrik konutlara sağlanacaktır.",
+                    trapB: "B seçeneği panel alanı olan 13 bin metrekareyi stadyumun toplam inşaat alanı gibi sunarak bilgiyi çarpıtır."
+                }
+            },
+            {
+                id: 124,
+                levelText: "Seviye: C1 (Kültür & Fuarcılık)",
+                sentence: "Yerli ve yabancı yüzlerce yazarın, okurlarıyla buluşma fırsatı yakaladığı 34. Uluslararası İstanbul Kitap Fuarı; hafta içi 08.00-15.00, hafta sonu 10.00-23.00 saatleri arasında, İstanbul ve dışından gelecek ziyaretçilerini bekliyor.",
+                choices: {
+                    A: "Fuar, hafta içi akşam saatlerinde de ziyaretçilerine açık olacaktır.",
+                    B: "Türk yazarların yanı sıra farklı ülkelerden de yazarlar fuara katılacaktır.",
+                    C: "Fuar, İstanbul dışındaki diğer şehirlerde de düzenlenecektir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Buluşma fırsatı yakalamak", definition: "Bir araya gelme imkânı bulmak." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), fuara hem yerli hem yabancı yazarların katılacağı bilgisini doğru biçimde yansıtır.",
+                    trapA: "A seçeneği fuarın hafta içi akşam saatlerinde de açık olacağını iddia eder; oysa hafta içi saatleri 08.00-15.00 ile sınırlıdır.",
+                    trapC: "C seçeneği fuarın İstanbul dışında da düzenleneceğini iddia ederek metinde yer almayan bir bilgi ekler."
+                }
+            },
+            {
+                id: 125,
+                levelText: "Seviye: C1 (Tarih & Ekonomi)",
+                sentence: "Tarihte, alışverişte ilk kez parayı kullanan topluluk olarak bilinen Lidyalılar, geçimlerini ticaretle sağlamışlar hatta Ege Denizi kıyılarından Mezopotamya'ya uzanan en büyük ticaret yolu olan \"Kral Yolu\"nu yapmışlardır.",
+                choices: {
+                    A: "Lidyalılar, Ege Denizi ile Mezopotamya arasındaki bölgeye yerleşmişlerdir.",
+                    B: "Lidyalılar, \"Kral Yolu\"ndan elde ettikleri gelirle geçimlerini sağlamışlardır.",
+                    C: "Lidyalılar, alışverişte ödeme aracı olarak para kullanılmasına öncü olmuşlardır."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "Öncü olmak", definition: "Bir alanda ilk adımı atan, yol gösteren kişi veya topluluk olmak." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (C), Lidyalıların alışverişte parayı ilk kullanan topluluk olduğu bilgisini doğru biçimde özetler.",
+                    trapA: "A seçeneği Lidyalıların Ege ile Mezopotamya arasındaki bölgeye 'yerleştiğini' iddia eder; oysa metin bir ticaret yolu yaptıklarından söz eder, yerleşimden değil.",
+                    trapB: "B seçeneği geçimlerini yalnızca 'Kral Yolu'ndan elde ettikleri gelirle sağladıklarını iddia ederek metindeki daha genel 'ticaretle geçim sağlama' bilgisini daraltır."
+                }
+            },
+            {
+                id: 101,
+                levelText: "Seviye: C1 (Teknoloji & Sosyoloji)",
+                sentence: "Yapay zekâ teknolojilerinin iş gücü piyasasındaki dönüşümsel etkisi, geleneksel meslek gruplarının ortadan kalkmasından ziyade yetkinlik setlerinin kökten güncellenmesini zorunlu kılan dinamik bir adaptasyon süreci olarak okunmalıdır.",
+                choices: {
+                    A: "Yapay zekâ, tüm geleneksel meslekleri tamamen ortadan kaldırarak işsizliği kaçınılmaz kılmaktadır.",
+                    B: "İş gücü piyasasındaki dönüşüm, mesleklerin yok olmasından ziyade becerilerin yenilenmesini gerektiren uyum sürecidir.",
+                    C: "Geleneksel meslek grupları, yapay zekâ karşısında tamamen korunmasız ve yeniliğe kapalı yapılar sunmaktadır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Dönüşümsel etki", definition: "Yapısal ve köklü değişim yaratan sonuç." },
+                    { term: "Yetkinlik seti", definition: "Bir kişinin sahip olduğu bilgi, beceri ve nitelikler bütünü." },
+                    { term: "Adaptasyon süreci", definition: "Uyum sağlama, yeni koşullara alışma evresi." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), metindeki 'geleneksel mesleklerin ortadan kalkmasından ziyade yetkinlik setlerinin kökten güncellenmesini zorunlu kılan dinamik bir adaptasyon süreci' ifadesiyle birebir örtüşmektedir.",
+                    trapA: "A seçeneği bir 'aşırı genelleştirme ve mutlaklaştırma' tuzakıdır; metin tamamen ortadan kalktığını değil, sürecin bir dönüşüm ve adaptasyon olduğunu belirtir.",
+                    trapC: "C seçeneği ise metinde geçmeyen ve anlamı çarpıtan olumsuz bir yargı (yeniliğe kapalı yapılar) içermektedir."
+                }
+            },
+            {
+                id: 102,
+                levelText: "Seviye: C1 (Ekoloji & Kentleşme)",
+                sentence: "Kentleşme süreçlerinin ekolojik dengeleri göz ardı ederek ivme kazanması, iklim krizinin yıkıcı etkilerini katbekat artırmakla kalmayıp yerel toplulukların tarihî hafızalarını ve kültürel ekosistemlerini de geri dönülmez biçimde tahrip etmektedir.",
+                choices: {
+                    A: "Hızlı kentleşme yalnızca iklim krizini tetiklemekte, toplumsal hafıza üzerinde herhangi bir tahribat yaratmamaktadır.",
+                    B: "Ekolojik dengeler gözetilmeden yapılan kentleşme, hem iklim krizini şiddetlendirmekte hem de kültürel mirası yıkıma uğratmaktadır.",
+                    C: "Kültürel ekosistemlerin korunması, ekolojik dengelerin gözetildiği kentleşme projelerinde dahi tamamen imkansızdır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "İvme kazanmak", definition: "Hızlanmak, hareketliliği artmak." },
+                    { term: "Katbekat", definition: "Defalarca katlanarak, kat kat fazla." },
+                    { term: "Kültürel ekosistem", definition: "Kültürel ögelerin ve tarihî hafızanın oluşturduğu karşılıklı etkileşim alanı." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), metinde geçen iklim krizinin şiddetlenmesi ile yerel toplulukların hafızasının tahrip edilmesi unsurlarını eksiksiz ve doğru şekilde yansıtmaktadır.",
+                    trapA: "A seçeneği, metinde açıkça ifade edilen kültürel ve tarihsel tahribatın varlığını inkâr ederek 'eksik bilgi ve çelişki' tuzağı kurmuştur.",
+                    trapC: "C seçeneği ise metinde bulunmayan aşırı karamsar ve mutlak bir genelleme ('tamamen imkansızdır') barındırmaktadır."
+                }
+            },
+            {
+                id: 103,
+                levelText: "Seviye: C1 (Ekonomi & Küresel Ticaret)",
+                sentence: "Küresel tedarik zincirlerindeki kırılganlıkların tırmandığı dönemlerde ulus devletlerin korumacı politikalara yönelmesi, kısa vadede ulusal pazarları güvence altına alsa da uzun vadede inovasyon kapasitesini baskılayan maliyet artışlarına yol açmaktadır.",
+                choices: {
+                    A: "Korumacı politikalar, ulusal pazarları korumakla birlikte uzun vadede yenilikçilik potansiyelini olumsuz etkileyen ekonomik yükler getirmektedir.",
+                    B: "Ulus devletler, tedarik zinciri krizlerini aşmak için kalıcı olarak küresel ticaretten tamamen vazgeçmektedir.",
+                    C: "Tedarik zincirlerindeki kırılganlıklar yalnızca korumacı politikalar uygulayan ülkelerde gözlemlenen geçici krizlerdir."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Tedarik zinciri", definition: "Ürünlerin ham maddeden son tüketiciye ulaşma süreçlerinin tamamı." },
+                    { term: "Kırılganlık", definition: "Dış etkenlere ve şoklara karşı zayıf, dayanaksız olma durumu." },
+                    { term: "İnovasyon kapasitesi", definition: "Yenilik üretme ve geliştirme yeteneği." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (A), kısa vadeli güvence ile uzun vadeli inovasyon maliyeti artışını dengeli ve metne sadık bir biçimde özetlemektedir.",
+                    trapB: "B seçeneği, ülkelerin ticaretten 'tamamen vazgeçtiği' yönünde metinde yer almayan aşırı ve yanıltıcı bir çıkarım içermektedir.",
+                    trapC: "C seçeneği ise krizlerin nedenini ve kapsamını daraltarak 'neden-sonuç ve kapsam' tuzağına düşmektedir."
+                }
+            },
+            {
+                id: 104,
+                levelText: "Seviye: C1 (Dijital Medya & Psikoloji)",
+                sentence: "Bireylerin dijital platformlardaki algoritmik yankı odalarına hapsolması, yalnızca farklı düşüncelerle karşılaşma ihtimalini ortadan kaldırmakla kalmamakta, aynı zamanda toplumsal kutuplaşmayı derinleştiren kolektif bir önyargı döngüsü yaratmaktadır.",
+                choices: {
+                    A: "Yankı odaları, bireylerin farklı görüşlerle zenginleşmesini sağlayan açık tartışma ortamları sunmaktadır.",
+                    B: "Dijital platformlardaki algoritmalar, toplumsal uyumu artırmak amacıyla bilinçli olarak tasarlanmıştır.",
+                    C: "Algoritmik kapanma, alternatif bakış açılarının engellenmesine ve ortak önyargıların pekişmesine neden olmaktadır."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "Yankı odası", definition: "Kişinin kendi görüşlerini sürekli onaylayan bilgi akışına maruz kaldığı dijital ortam." },
+                    { term: "Kutuplaşma", definition: "Grupların birbirine karşıt uçlara savrulması durumu." },
+                    { term: "Kolektif", definition: "Ortak, toplumsal, el birliğiyle yapılan." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (C), metindeki farklı düşüncelerin engellenmesi ve kutuplaştırıcı önyargı döngüsü çıkarımını doğru bir dille ifade etmektedir.",
+                    trapA: "A seçeneği, metnin ana fikrinin tam zıddını savunarak doğrudan 'zıtlık/çelişki' tuzağı oluşturmaktadır.",
+                    trapB: "B seçeneği ise algoritmik yapıların toplumsal uyum amaçladığını öne sürerek metin içeriğiyle bağdaşmayan asılsız bir varsayım sunmaktadır."
+                }
+            },
+            {
+                id: 105,
+                levelText: "Seviye: C1 (Kültür & Tarih Koruma)",
+                sentence: "Arkeolojik mirasın turizm gelirleri uğruna ticari bir meta haline getirilmesi, kültürel varlıkların özgün bağlamından koparılarak metalaştırılmasına ve nihayetinde gelecek nesillere aktarılacak evrensel hafızanın erozyona uğramasına neden olmaktadır.",
+                choices: {
+                    A: "Turizm faaliyetleri, arkeolojik alanların korunmasını ve gelecek nesillere eksiksiz aktarılmasını garantileyen en önemli unsurdur.",
+                    B: "Kültürel varlıkların ticari amaçla sergilenmesi, onların özgün anlamını zedelemekte ve tarihî belleği zayıflatmaktadır.",
+                    C: "Arkeolojik mirasın korunmasındaki temel amaç, ekonomik kalkınmayı hızlandıracak ticari gelir elde etmektir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Meta", definition: "Alınıp satılabilen ticari mal, nesne." },
+                    { term: "Özgün bağlam", definition: "Bir eserin ait olduğu orijinal ortam, şartlar ve anlam bütünlüğü." },
+                    { term: "Erozyona uğramak", definition: "Zamanla aşınmak, gücünü ve değerini yitirmek." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), ticari metalaştırmanın özgün anlamı zedelemesi ve hafızayı zayıflatması yönündeki temel argümanı kusursuz şekilde yansıtmaktadır.",
+                    trapA: "A seçeneği, turizmin korumayı garantilediğini öne sürerek metnin eleştirel yaklaşımını tersine çeviren bir çelişki barındırmaktadır.",
+                    trapC: "C seçeneği ise metnin eleştirdiği durumu sanki olumlu bir amaçmış gibi sunarak 'değerlendirme hatası' tuzağı kurmaktadır."
+                }
+            },
+            {
+                id: 106,
+                levelText: "Seviye: C1 (Bilim & Epistemoloji)",
+                sentence: "Bilimsel bilginin mutlak bir kesinlik taşıdığına dair yaygın yanılgı, aslında bilimin yanlışlanabilirlik ilkesi üzerine kurulu dinamik ve sürekli güncellenen doğasıyla doğrudan çelişmektedir.",
+                choices: {
+                    A: "Bilimsel teoriler hiçbir zaman değişmeyen kesin kanunlardan oluşur.",
+                    B: "Bilimsel bilgi değişmez değildir; aksine sürekli test edilerek yenilenen dinamik bir yapıya sahiptir.",
+                    C: "Yanlışlanabilirlik ilkesi, bilimin güvenilirliğini tamamen ortadan kaldıran bir zayıflıktır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Yanlışlanabilirlik", definition: "Bir önermenin veya teorinin yanlış olduğunun kanıtlanabilme olasılığı." },
+                    { term: "Mutlak kesinlik", definition: "Hiçbir kukuya yer bırakmayan kesin ve sarsılmaz durum." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), bilimin sürekli güncellenen ve yanlışlanabilir yapısını tam olarak vurgulamaktadır.",
+                    trapA: "A seçeneği, metnin eleştirdiği 'mutlak kesinlik' yanılgısının kendisini savunmaktadır.",
+                    trapC: "C seçeneği ise yanlışlanabilirliği bir zayıflık olarak nitelendirerek metnin ana fikrini çarpıtmaktadır."
+                }
+            },
+            {
+                id: 107,
+                levelText: "Seviye: C1 (Eğitim & Bilişsel Gelişim)",
+                sentence: "Formel eğitim sistemlerinin ezberci yaklaşımlardan arındırılarak analitik düşünme becerilerini merkeze alması, bireylerin karmaşık problemlere yenilikçi çözümler üretebilmesinin ön koşuludur.",
+                choices: {
+                    A: "Ezberci eğitim modelleri, karmaşık problemlerin çözümünde en etkili yöntemdir.",
+                    B: "Analitik düşünceye odaklanan eğitim sistemleri, bireylerin yaratıcı problem çözme yeteneğini destekler.",
+                    C: "Formel eğitim, analitik becerilerden ziyade geleneksel ezberleri kalıcı kılmayı amaçlar."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Formel eğitim", definition: "Okullarda ve belirli kurallara göre yapılan örgün eğitim." },
+                    { term: "Analitik düşünme", definition: "Olayları parçalara ayırarak ve mantıksal bağlar kurarak inceleme yeteneği." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), analitik eğitimin yenilikçi çözümler üretmedeki ön koşul niteliğini doğru aktarmaktadır.",
+                    trapA: "A seçeneği metnin önerdiği yaklaşımın tam tersini savunmaktadır.",
+                    trapC: "C seçeneği ise sistemin amacını yanlış yönlendirerek çelişki yaratmaktadır."
+                }
+            },
+            {
+                id: 108,
+                levelText: "Seviye: C1 (Sanat & Estetik Felsefe)",
+                sentence: "Sanat eserinin yalnızca estetik bir nesne olarak görülmesi, onun toplumsal dönüşümleri tetikleyen eleştirel ve politik gücünü göz ardı eden indirgemeci bir yaklaşımdır.",
+                choices: {
+                    A: "Sanat eserleri yalnızca görsel zevk vermeyi amaçlayan zararsız nesnelerdir.",
+                    B: "Sanatı sadece estetik bir obje indirgemek, onun toplumsal ve politik etkisini görmezden gelmektir.",
+                    C: "Sanatın toplumsal dönüşüm gücü, estetik değerinden tamamen bağımsızdır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "İndirgemeci", definition: "Karmaşık bir olguyu daha basit veya yetersiz bir düzeye indirgeyen." },
+                    { term: "Estetik nesne", definition: "Güzel duygu uyandırmayı hedefleyen nesne." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), eserin sadece estetik olarak görülmesinin eleştirel gücü göz ardı etmek anlamına geldiğini doğrular.",
+                    trapA: "A seçeneği metnin eleştirdiği indirgemeci bakış açısını tekrarlamaktadır.",
+                    trapC: "C seçeneği ise iki kavram arasındaki bağı kopararak metne aykırı bir yargı üretir."
+                }
+            },
+            {
+                id: 109,
+                levelText: "Seviye: C1 (Hukuk & Toplumsal Düzen)",
+                sentence: "Hukukun üstünlüğü ilkesinin kurumsal olarak benimsenmediği toplumlarda, ekonomik istikrar ve sosyal adalet ne kadar çaba gösterilirse gösterilsin sürdürülebilir bir nitelik kazanamaz.",
+                choices: {
+                    A: "Ekonomik istikrar, hukukun üstünlüğünden bağımsız olarak dış yardımlarla sağlanabilir.",
+                    B: "Hukuk kurallarının olmadığı ortamlarda kalıcı ekonomik ve sosyal adalet kurmak mümkün değildir.",
+                    C: "Sosyal adalet, ekonomik büyüme sağlandığı takdirde hukuki temellere ihtiyaç duymaz."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Hukukun üstünlüğü", definition: "Herkesin ve her kurumun hukuka bağlı olması durumu." },
+                    { term: "Sürdürülebilir", definition: "Kesintisiz olarak uzun vadede devam ettirilebilir." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), hukuki altyapı olmadan adalet ve istikrarın olamayacağı yargısını tam olarak yansıtır.",
+                    trapA: "A seçeneği metnin vurguladığı hukuki şartı dış yardımlarla aşabileceğini iddia ederek yanıltır.",
+                    trapC: "C seçeneği ise ekonomik büyüme ile adalet arasında yanlış bir öncelik sırası kurar."
+                }
+            },
+            {
+                id: 110,
+                levelText: "Seviye: C1 (İletişim & Medya Okuryazarlığı)",
+                sentence: "Medya okuryazarlığı eğitiminin yaygınlaştırılması, bireylerin enformasyon kirliliği karşısında bilinçli bir süzgeç geliştirmesini sağlayarak manipülasyonlara karşı direnç kazanmasında kritik rol oynamaktadır.",
+                choices: {
+                    A: "Enformasyon kirliliği, medya eğitimi almış bireyleri hiçbir şekilde etkilememektedir.",
+                    B: "Bilinçli medya eğitimi, bireylerin bilgi kirliliğini ayıklamasına ve manipülasyonlara karşı dirençli olmasına yardım eder.",
+                    C: "Manipülasyonlar ancak gelişmiş teknolojik yazılımlar aracılığıyla engellenebilir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Enformasyon", definition: "Bilgi, haberleşme verisi." },
+                    { term: "Manipülasyon", definition: "Yönlendirme, yanıltma, halkı etkileme." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), medya okuryazarlığının bilgi kirliliğini süzme ve manipülasyona direnç sağlama işlevini özetler.",
+                    trapA: "A seçeneği mutlak bir bağışıklık iddiasıyla aşırı genelleme hatası yapar.",
+                    trapC: "C seçeneği ise çözüm olarak eğitimi değil teknolojik yazılımları göstererek konuyu saptırır."
+                }
+            },
+            {
+                id: 126,
+                levelText: "Seviye: C1 (Uzay & Astronomi)",
+                sentence: "Mars yüzeyinde keşfedilen donmuş su izleri, gezegenin geçmişte sanıldığından çok daha ıslak bir iklime sahip olabileceğine işaret etse de bu bulgular tek başına geçmişte yaşamın var olduğunu kanıtlamaktan uzaktır.",
+                choices: {
+                    A: "Mars'ta bulunan donmuş su izleri, gezegende geçmişte yaşamın kesin olarak var olduğunu kanıtlamaktadır.",
+                    B: "Mars'ın geçmişteki iklimi hakkında ipucu veren su izleri, yaşamın varlığını kanıtlamak için yeterli değildir.",
+                    C: "Bilim insanları, Mars'taki su izlerinin gezegenin ikliminden bağımsız olduğunu öne sürmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "İşaret etmek", definition: "Bir durumun varlığına veya olasılığına dair ipucu vermek." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), su izlerinin iklime dair ipucu verdiğini ama yaşam kanıtı için yetersiz kaldığını doğru yansıtır.",
+                    trapA: "A seçeneği metnin açıkça reddettiği 'kesin kanıt' iddiasını savunarak çelişki yaratır.",
+                    trapC: "C seçeneği su izleriyle iklim arasındaki bağlantıyı tamamen koparır; oysa metin tam tersini söyler."
+                }
+            },
+            {
+                id: 127,
+                levelText: "Seviye: C1 (Yapay Zekâ & Etik)",
+                sentence: "Yapay zekâ destekli karar mekanizmalarının işe alım süreçlerinde kullanılması, işlemleri hızlandırırken algoritmaların eğitildiği verilerdeki önyargıları da sessizce yeniden üretebilme riski taşımaktadır.",
+                choices: {
+                    A: "Yapay zekâ, işe alım süreçlerinde önyargıdan tamamen arınmış objektif kararlar üretmektedir.",
+                    B: "İşe alımda kullanılan yapay zekâ sistemleri, hız kazandırsa da eğitildiği verilerdeki önyargıları sürdürebilir.",
+                    C: "Algoritmik önyargı sorunu yalnızca insan kaynaklı karar mekanizmalarında görülen bir sorundur."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Yeniden üretmek", definition: "Var olan bir örüntüyü veya sorunu farkında olmadan tekrar ortaya çıkarmak." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), hız kazandırma ile önyargı riskinin bir arada var olduğunu dengeli biçimde yansıtır.",
+                    trapA: "A seçeneği metnin doğrudan uyardığı önyargı riskini yok sayarak metinle çelişir.",
+                    trapC: "C seçeneği sorunu yalnızca insana atfederek metindeki 'algoritmaların... yeniden üretebilme riski' ifadesini görmezden gelir."
+                }
+            },
+            {
+                id: 128,
+                levelText: "Seviye: C1 (Enerji & Teknoloji)",
+                sentence: "Yenilenebilir enerji kaynaklarının depolanmasındaki teknolojik sınırlılıklar aşılmadıkça, güneş ve rüzgâr santrallerinin ürettiği fazla enerjinin israf edilmesinin önüne geçilmesi güç görünmektedir.",
+                choices: {
+                    A: "Güneş ve rüzgâr santralleri, ürettikleri enerjinin tamamını herhangi bir kayıp yaşamadan kullanabilmektedir.",
+                    B: "Enerji depolama teknolojisindeki eksiklikler giderilmeden yenilenebilir enerjideki israfın önlenmesi zordur.",
+                    C: "Yenilenebilir enerji kaynakları, depolama sorunları nedeniyle tamamen terk edilmelidir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Aşılmak", definition: "Bir engelin veya güçlüğün üstesinden gelinmek." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), depolama sınırlılıkları ile enerji israfı arasındaki nedensellik ilişkisini doğru kurar.",
+                    trapA: "A seçeneği metnin belirttiği israf sorununu tamamen yok sayarak çelişki oluşturur.",
+                    trapC: "C seçeneği metinde önerilmeyen aşırı bir çözüm (tamamen terk etme) getirir."
+                }
+            },
+            {
+                id: 129,
+                levelText: "Seviye: C1 (Göç & Sosyoloji)",
+                sentence: "Kırsaldan kente yaşanan yoğun göç dalgası, şehirlerin altyapı kapasitesini zorlarken göç edenlerin geride bıraktığı tarım arazilerinin atıl kalmasına da yol açmaktadır.",
+                choices: {
+                    A: "Kentleşme sürecinde yalnızca şehir altyapısı olumsuz etkilenmekte, kırsal alanlar bundan etkilenmemektedir.",
+                    B: "Kırsaldan kente göç, hem şehir altyapısını zorlamakta hem de tarım arazilerinin kullanılmamasına neden olmaktadır.",
+                    C: "Göç eden bireyler, kentteki altyapı sorunlarını çözmek amacıyla tarım arazilerini terk etmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Atıl kalmak", definition: "Kullanılmadan, işlevsiz biçimde boş durmak." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), göçün hem kentte hem kırsalda yarattığı çifte olumsuz etkiyi eksiksiz yansıtır.",
+                    trapA: "A seçeneği metinde açıkça belirtilen tarım arazilerindeki olumsuz etkiyi yok sayar.",
+                    trapC: "C seçeneği göçün nedenini yanlış kurarak metinde olmayan bir amaç ilişkisi (altyapı sorununu çözmek) uydurur."
+                }
+            },
+            {
+                id: 130,
+                levelText: "Seviye: C1 (Beslenme & Halk Sağlığı)",
+                sentence: "İşlenmiş gıda tüketiminin artmasıyla birlikte toplumlarda görülen kronik hastalıkların yaygınlaşması, beslenme alışkanlıklarının yalnızca bireysel bir tercih değil aynı zamanda bir halk sağlığı meselesi olarak ele alınması gerektiğini göstermektedir.",
+                choices: {
+                    A: "Kronik hastalıkların artışı, beslenme alışkanlıklarının halk sağlığı açısından da değerlendirilmesi gerektiğine işaret etmektedir.",
+                    B: "İşlenmiş gıdalar, kronik hastalıkların tek nedeni olarak kabul edilmektedir.",
+                    C: "Beslenme alışkanlıkları yalnızca bireysel tercihlerle şekillenen, toplumsal boyutu olmayan bir konudur."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Halk sağlığı", definition: "Toplumun genelini ilgilendiren sağlık konuları ve önlemleri." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (A), beslenmenin bireysel olmaktan çıkıp toplumsal bir mesele hâline geldiği yargısını doğru yansıtır.",
+                    trapB: "B seçeneği işlenmiş gıdayı 'tek neden' ilan ederek metnin ima etmediği bir kesinlik ekler.",
+                    trapC: "C seçeneği metnin tam tersini savunarak doğrudan çelişki oluşturur."
+                }
+            },
+            {
+                id: 131,
+                levelText: "Seviye: C1 (Spor Bilimi & Teknoloji)",
+                sentence: "Sporcuların performansını artırmaya yönelik geliştirilen giyilebilir teknolojiler, antrenman verimliliğini artırsa da bu cihazlardan elde edilen verilerin doğru yorumlanmaması sakatlanma riskini de beraberinde getirebilmektedir.",
+                choices: {
+                    A: "Giyilebilir teknolojiler, doğru kullanıldığında sporcularda sakatlanma riskini tamamen ortadan kaldırmaktadır.",
+                    B: "Antrenman verimliliğini artıran giyilebilir teknolojiler, verilerin yanlış yorumlanması durumunda sakatlanmaya zemin hazırlayabilir.",
+                    C: "Sporcu performansı, yalnızca giyilebilir teknolojiler sayesinde artırılabilmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Zemin hazırlamak", definition: "Bir durumun ortaya çıkması için uygun koşulları oluşturmak." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), verimlilik artışı ile yanlış veri yorumundan kaynaklanan riski dengeli biçimde sunar.",
+                    trapA: "A seçeneği riski 'tamamen ortadan kaldırma' gibi metinde olmayan mutlak bir iddiada bulunur.",
+                    trapC: "C seçeneği performans artışını yalnızca bu teknolojiye bağlayarak aşırı genelleme yapar."
+                }
+            },
+            {
+                id: 132,
+                levelText: "Seviye: C1 (Ekonomi & Finans)",
+                sentence: "Merkez bankalarının enflasyonla mücadele amacıyla faiz oranlarını art arda yükseltmesi, fiyat istikrarını sağlama hedefine hizmet etse de kredi maliyetlerinin artması nedeniyle küçük işletmelerin finansmana erişimini zorlaştırmaktadır.",
+                choices: {
+                    A: "Faiz artışları, küçük işletmelerin finansmana erişimini kolaylaştıran bir etki yaratmaktadır.",
+                    B: "Merkez bankaları, enflasyonla mücadele etmek yerine küçük işletmeleri desteklemeyi tercih etmektedir.",
+                    C: "Enflasyonu düşürmeyi amaçlayan faiz artışları, küçük işletmelerin kredi bulmasını güçleştirmektedir."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "Fiyat istikrarı", definition: "Fiyatların aşırı dalgalanma göstermeden nispeten sabit kalması durumu." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (C), faiz artışının hem enflasyonla mücadeledeki rolünü hem de küçük işletmelere olumsuz etkisini dengeli yansıtır.",
+                    trapA: "A seçeneği metnin belirttiği zorlaşma durumunu tam tersine çevirir.",
+                    trapB: "B seçeneği merkez bankalarının önceliğini yanlış kurarak metinde olmayan bir tercih iddiası öne sürer."
+                }
+            },
+            {
+                id: 133,
+                levelText: "Seviye: C1 (Dijital Mahremiyet)",
+                sentence: "Akıllı ev cihazlarının kullanıcı alışkanlıklarını kaydederek kişiselleştirilmiş hizmet sunması, günlük yaşamı kolaylaştırırken bu verilerin nasıl saklandığına ve kimlerle paylaşıldığına dair şeffaflık eksikliği mahremiyet endişelerini artırmaktadır.",
+                choices: {
+                    A: "Akıllı ev cihazları, kullanıcı verilerini tamamen şeffaf biçimde işlemektedir.",
+                    B: "Kullanıcı alışkanlıklarını kaydeden akıllı cihazlar kolaylık sağlasa da veri şeffaflığındaki eksiklik mahremiyet kaygısı doğurmaktadır.",
+                    C: "Mahremiyet endişeleri yalnızca akıllı ev cihazlarına özgü, diğer teknolojilerde görülmeyen bir sorundur."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Şeffaflık", definition: "Bir sürecin veya işlemin açık, anlaşılır ve denetlenebilir olması." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), kolaylık ile şeffaflık eksikliğinden doğan mahremiyet kaygısını birlikte doğru yansıtır.",
+                    trapA: "A seçeneği metnin doğrudan eleştirdiği 'şeffaflık eksikliğini' yok sayarak çelişki yaratır.",
+                    trapC: "C seçeneği sorunu yalnızca bu cihazlara özgüleyerek metinde olmayan bir sınırlama getirir."
+                }
+            },
+            {
+                id: 134,
+                levelText: "Seviye: C1 (Mimarlık & Kentsel Tasarım)",
+                sentence: "Yeşil çatı uygulamalarının kentsel ısı adası etkisini azaltmadaki katkısı bilimsel çalışmalarla desteklense de yüksek kurulum maliyetleri bu uygulamaların yaygınlaşmasının önündeki başlıca engel olmaya devam etmektedir.",
+                choices: {
+                    A: "Yeşil çatı uygulamaları, kurulum maliyeti düşük olduğu için hızla yaygınlaşmaktadır.",
+                    B: "Kentsel ısı adası etkisini azaltmada etkili olan yeşil çatılar, yüksek maliyetler nedeniyle yeterince yaygınlaşamamaktadır.",
+                    C: "Bilimsel çalışmalar, yeşil çatıların kentsel ısınmaya herhangi bir katkısı olmadığını göstermektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Kentsel ısı adası", definition: "Şehir merkezlerinin çevresine göre daha yüksek sıcaklık göstermesi olgusu." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), yeşil çatıların faydası ile maliyet engelini bir arada doğru yansıtır.",
+                    trapA: "A seçeneği metnin belirttiği 'yüksek maliyet' engelini tersine çevirerek çelişki oluşturur.",
+                    trapC: "C seçeneği metnin doğruladığı bilimsel katkıyı tamamen reddederek metinle çelişir."
+                }
+            },
+            {
+                id: 135,
+                levelText: "Seviye: C1 (Nörobilim & Uyku)",
+                sentence: "Uyku yoksunluğunun bilişsel performans üzerindeki olumsuz etkileri uzun süredir bilinse de son araştırmalar bu etkinin yalnızca dikkat eksikliğiyle sınırlı kalmayıp uzun vadeli hafıza pekiştirme süreçlerini de bozduğunu ortaya koymuştur.",
+                choices: {
+                    A: "Uyku yoksunluğunun bilişsel etkileri yalnızca kısa süreli dikkat kaybıyla sınırlıdır.",
+                    B: "Yeni araştırmalar, uyku yoksunluğunun hem dikkati hem de uzun vadeli hafıza pekiştirmesini olumsuz etkilediğini göstermektedir.",
+                    C: "Hafıza pekiştirme süreçleri, uyku düzeninden bağımsız olarak işlemektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Pekiştirme", definition: "Öğrenilen bilginin kalıcı hafızaya aktarılma süreci." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), araştırmaların ortaya koyduğu iki etkiyi (dikkat ve hafıza) eksiksiz yansıtır.",
+                    trapA: "A seçeneği metnin genişlettiği etki alanını yalnızca dikkatle sınırlandırarak eksik bilgi sunar.",
+                    trapC: "C seçeneği metnin doğrudan kurduğu bağlantıyı (uyku-hafıza) tamamen reddeder."
+                }
+            },
+            {
+                id: 136,
+                levelText: "Seviye: C1 (Turizm & Kentsel Yaşam)",
+                sentence: "Aşırı turizmin tarihi kent merkezlerindeki yerel yaşamı zorlaştırdığı gerekçesiyle bazı Avrupa şehirleri, ziyaretçi sayısını sınırlayan düzenlemeler getirmeyi gündemine almıştır.",
+                choices: {
+                    A: "Bazı Avrupa şehirleri, turizmden elde ettikleri geliri artırmak amacıyla ziyaretçi sayısını artırmayı planlamaktadır.",
+                    B: "Aşırı turizmin yerel yaşama olumsuz etkisi nedeniyle bazı şehirler ziyaretçi sayısını sınırlamayı değerlendirmektedir.",
+                    C: "Tarihi kent merkezlerindeki yerel yaşam, turizmden hiçbir şekilde etkilenmemektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Gündemine almak", definition: "Bir konuyu tartışma veya değerlendirme kapsamına dahil etmek." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), aşırı turizmin nedeni ve şehirlerin buna karşı aldığı önlemi doğru biçimde özetler.",
+                    trapA: "A seçeneği metnin belirttiği sınırlama eğilimini tam tersine çevirerek çelişki yaratır.",
+                    trapC: "C seçeneği metnin dayandığı temel gerekçeyi (yerel yaşamın zorlaşması) tamamen yok sayar."
+                }
+            },
+            {
+                id: 137,
+                levelText: "Seviye: C1 (Tarım Teknolojisi)",
+                sentence: "Hassas tarım uygulamaları, toprak ve iklim verilerini analiz ederek çiftçilerin gübre ve su kullanımını ihtiyaca göre optimize etmesine olanak tanısa da bu teknolojilere erişimdeki maliyet farkı küçük ölçekli üreticileri dezavantajlı konuma düşürmektedir.",
+                choices: {
+                    A: "Hassas tarım teknolojileri, tüm çiftçilere eşit maliyetle sunulduğu için erişim sorunu yaşanmamaktadır.",
+                    B: "Kaynak kullanımını optimize eden hassas tarım teknolojilerine erişim maliyeti, küçük üreticileri dezavantajlı hâle getirmektedir.",
+                    C: "Gübre ve su kullanımının optimize edilmesi, yalnızca büyük ölçekli üreticiler için mümkündür."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Optimize etmek", definition: "Bir süreci en verimli ve en uygun hâle getirmek." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), teknolojinin faydası ile erişim maliyetinden doğan dezavantajı birlikte doğru yansıtır.",
+                    trapA: "A seçeneği metnin açıkça belirttiği maliyet farkını yok sayarak çelişir.",
+                    trapC: "C seçeneği optimize etmenin yalnızca büyük üreticilerle sınırlı olduğunu iddia ederek metinde olmayan bir kesinlik ekler."
+                }
+            },
+            {
+                id: 138,
+                levelText: "Seviye: C1 (Uluslararası Ticaret)",
+                sentence: "Serbest ticaret anlaşmalarının gümrük vergilerini kaldırarak ülkeler arası mal akışını hızlandırması, tüketiciler için fiyat avantajı sağlarken bazı yerli sektörlerin dış rekabet karşısında zor duruma düşmesine de yol açabilmektedir.",
+                choices: {
+                    A: "Serbest ticaret anlaşmaları, tüm yerli sektörlere eşit ölçüde fayda sağlamaktadır.",
+                    B: "Gümrük vergilerinin kaldırılması, tüketiciye fiyat avantajı sağlarken bazı yerli sektörleri rekabet baskısı altına sokabilir.",
+                    C: "Yerli sektörler, dış rekabetten yalnızca serbest ticaret anlaşmaları olmadığında etkilenmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Rekabet baskısı", definition: "Piyasadaki diğer üreticilerle mücadele etmek zorunda kalmaktan doğan zorlanma durumu." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), tüketici avantajı ile yerli sektörlerdeki olumsuz etkiyi bir arada dengeli biçimde sunar.",
+                    trapA: "A seçeneği metnin belirttiği zorlanma durumunu göz ardı ederek tüm sektörlere eşit fayda iddiasında bulunur.",
+                    trapC: "C seçeneği neden-sonuç ilişkisini tersine çevirerek metinle çelişen bir yargı üretir."
+                }
+            },
+            {
+                id: 139,
+                levelText: "Seviye: C1 (Eğitim Teknolojisi)",
+                sentence: "Uzaktan eğitim platformlarının coğrafi engelleri ortadan kaldırarak eğitime erişimi genişletmesi büyük bir kazanım olsa da öğrenciler arasındaki dijital altyapı eşitsizliği bu fırsatın herkes için eşit ölçüde geçerli olmadığını göstermektedir.",
+                choices: {
+                    A: "Uzaktan eğitim, dijital altyapı farkı gözetmeksizin tüm öğrencilere eşit fırsat sunmaktadır.",
+                    B: "Eğitime erişimi genişleten uzaktan eğitim platformları, dijital altyapı eşitsizliği nedeniyle herkes için eşit fırsat sunamamaktadır.",
+                    C: "Coğrafi engeller, uzaktan eğitim platformları sayesinde tüm öğrenciler için ortadan kalkmıştır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Dijital altyapı", definition: "İnternet erişimi, cihaz gibi teknolojik olanakların tamamı." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), erişim genişlemesi ile altyapı eşitsizliğinden doğan sınırlılığı birlikte doğru aktarır.",
+                    trapA: "A seçeneği metnin doğrudan belirttiği eşitsizliği yok sayarak çelişki oluşturur.",
+                    trapC: "C seçeneği 'tüm öğrenciler için' ifadesiyle metnin sınırladığı kazanımı aşırı genelleştirir."
+                }
+            },
+            {
+                id: 140,
+                levelText: "Seviye: C1 (Sanat Piyasası & Teknoloji)",
+                sentence: "Dijital sanat eserlerinin blok zinciri teknolojisiyle tescillenerek alınıp satılabilmesi sanatçılara yeni bir gelir kapısı açsa da bu pazarın aşırı spekülatif dalgalanmalara açık olması yatırımcılar için önemli bir risk unsuru oluşturmaktadır.",
+                choices: {
+                    A: "Dijital sanat pazarı, spekülatif dalgalanmalardan tamamen bağışık, güvenli bir yatırım alanıdır.",
+                    B: "Blok zinciri teknolojisiyle satılan dijital sanat eserleri, sanatçılara gelir sağlasa da yatırımcılar için risk taşımaktadır.",
+                    C: "Sanatçılar, dijital sanat pazarındaki risk nedeniyle bu pazardan tamamen uzak durmaktadır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Spekülatif", definition: "Kesin bilgiye değil tahmine dayalı, riskli." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), gelir kapısı olma özelliği ile yatırımcı riskini birlikte doğru yansıtır.",
+                    trapA: "A seçeneği metnin açıkça belirttiği riski yok sayarak tam tersini iddia eder.",
+                    trapC: "C seçeneği metinde yer almayan bir sonuç (sanatçıların pazardan tamamen uzaklaşması) uydurur."
+                }
+            },
+            {
+                id: 141,
+                levelText: "Seviye: C1 (Psikoloji & Dayanıklılık)",
+                sentence: "Zorlu yaşam olayları karşısında psikolojik dayanıklılık gösteren bireylerin bu özelliği doğuştan değil, destekleyici sosyal ilişkiler ve öğrenilmiş baş etme becerileri yoluyla geliştirdiği araştırmalarla ortaya konmuştur.",
+                choices: {
+                    A: "Psikolojik dayanıklılık, yalnızca doğuştan gelen ve değiştirilemeyen bir özelliktir.",
+                    B: "Araştırmalar, psikolojik dayanıklılığın sosyal destek ve öğrenilmiş becerilerle geliştirilebilen bir özellik olduğunu göstermektedir.",
+                    C: "Zorlu yaşam olayları, bireylerin sosyal ilişkilerini güçlendirmesine engel olmaktadır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Baş etme becerisi", definition: "Zorluklarla mücadele etmek için kullanılan yöntem ve stratejiler." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), dayanıklılığın öğrenilebilir bir özellik olduğu bulgusunu doğru yansıtır.",
+                    trapA: "A seçeneği metnin doğrudan reddettiği 'doğuştan gelme' iddiasını savunarak çelişir.",
+                    trapC: "C seçeneği metinde kurulmayan bir neden-sonuç ilişkisi (zorluğun sosyal ilişkiyi engellemesi) uydurur."
+                }
+            },
+            {
+                id: 142,
+                levelText: "Seviye: C1 (Medya Etiği)",
+                sentence: "Haber kuruluşlarının tıklanma oranlarını artırmak amacıyla başlıkları abartılı biçimde kurgulaması, kısa vadede okur ilgisini artırsa da uzun vadede kurumun güvenilirliğine zarar verme riski taşımaktadır.",
+                choices: {
+                    A: "Abartılı başlıklar, haber kuruluşlarının güvenilirliğini uzun vadede artıran etkili bir stratejidir.",
+                    B: "Tıklanma amacıyla kurgulanan abartılı başlıklar kısa vadede ilgi çekse de kurumsal güvenilirliği zedeleme riski taşır.",
+                    C: "Okur ilgisi, yalnızca haber başlıklarının doğruluğuna bağlı olarak değişmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Güvenilirlik", definition: "Bir kurum veya kişinin doğru ve tutarlı bilgi sunduğuna dair oluşan itibar." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), kısa vadeli kazanç ile uzun vadeli riski dengeli biçimde sunar.",
+                    trapA: "A seçeneği metnin belirttiği riski tam tersine çevirerek çelişki yaratır.",
+                    trapC: "C seçeneği okur ilgisinin tek belirleyicisini başlık doğruluğuna indirgeyerek aşırı basitleştirme yapar."
+                }
+            },
+            {
+                id: 143,
+                levelText: "Seviye: C1 (Ulaşım & Kentsel Planlama)",
+                sentence: "Şehir içi toplu taşıma ağlarının genişletilmesi trafik sıkışıklığını azaltma potansiyeli taşısa da bu yatırımların etkili olabilmesi için bireysel araç kullanımını caydırıcı ek politikalarla desteklenmesi gerekmektedir.",
+                choices: {
+                    A: "Toplu taşıma ağlarının genişletilmesi tek başına trafik sıkışıklığını çözmeye yeterli olmayabilir.",
+                    B: "Bireysel araç kullanımı, toplu taşıma yatırımlarından bağımsız olarak kendiliğinden azalmaktadır.",
+                    C: "Trafik sıkışıklığı, yalnızca toplu taşıma ağlarının yetersizliğinden kaynaklanmaktadır."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Caydırıcı", definition: "Bir davranıştan vazgeçirmeye yönelik, engelleyici." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (A), toplu taşıma yatırımının tek başına yeterli olmayabileceği koşulunu doğru yansıtır.",
+                    trapB: "B seçeneği metnin vurguladığı 'ek politika gerekliliğini' göz ardı ederek araç kullanımının kendiliğinden azalacağını iddia eder.",
+                    trapC: "C seçeneği sıkışıklığın tek nedenini toplu taşıma yetersizliğine indirger, oysa metin çözüm için ek politika gerektiğini söyler."
+                }
+            },
+            {
+                id: 144,
+                levelText: "Seviye: C1 (Genetik Mühendislik)",
+                sentence: "Gen düzenleme teknolojilerinin tarımsal ürünlerde hastalıklara karşı direnç kazandırmak amacıyla kullanılması verim artışı sağlasa da bu uygulamaların ekosistem üzerindeki uzun vadeli etkileri hâlâ tam olarak bilinmemektedir.",
+                choices: {
+                    A: "Gen düzenleme teknolojilerinin ekosistem üzerindeki tüm etkileri bilimsel olarak kesinlik kazanmıştır.",
+                    B: "Tarımsal verimi artıran gen düzenleme uygulamalarının ekosistemdeki uzun vadeli sonuçları henüz tam olarak bilinmemektedir.",
+                    C: "Hastalıklara direnç kazandırma amacı, gen düzenleme teknolojilerinin ekosistem üzerindeki etkisini ortadan kaldırmaktadır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Ekosistem", definition: "Canlıların birbirleriyle ve çevreleriyle etkileşim içinde bulunduğu bütün." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), verim artışı ile ekosistem etkisindeki belirsizliği birlikte doğru aktarır.",
+                    trapA: "A seçeneği metnin açıkça belirttiği bilinmezliği yok sayarak tam tersini iddia eder.",
+                    trapC: "C seçeneği amacın kendisinin etkiyi ortadan kaldırdığını iddia ederek mantıksal bir bağlantı hatası kurar."
+                }
+            },
+            {
+                id: 145,
+                levelText: "Seviye: C1 (Felsefe & Teknoloji Etiği)",
+                sentence: "Otonom araçların kaçınılmaz kaza anlarında hangi tarafı koruyacağına dair algoritmik kararlar üretmesi, mühendislik sorunundan çok etik bir tartışma alanı olarak karşımıza çıkmaktadır.",
+                choices: {
+                    A: "Otonom araçların kaza anlarındaki kararları, tamamen mühendislik hesaplamalarıyla çözülebilecek teknik bir meseledir.",
+                    B: "Otonom araçların kaza durumundaki kararları, teknik olmaktan çok etik bir tartışma konusu hâline gelmektedir.",
+                    C: "Etik tartışmalar, otonom araç teknolojisinin gelişimini tamamen durdurmuştur."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Kaçınılmaz", definition: "Önlenemeyen, engellenmesi mümkün olmayan." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), meselenin mühendislikten çok etik boyutuna vurgu yapan metnin ana fikrini doğru yansıtır.",
+                    trapA: "A seçeneği metnin tam tersini savunarak konuyu yalnızca teknik bir soruna indirger.",
+                    trapC: "C seçeneği metinde yer almayan bir sonuç (teknolojinin durması) uydurur."
+                }
+            },
+            {
+                id: 146,
+                levelText: "Seviye: C1 (Demografi & Sosyal Politika)",
+                sentence: "Doğum oranlarındaki düşüşün yaşlanan nüfusla birleşmesi, birçok ülkede sosyal güvenlik sistemlerinin sürdürülebilirliğini tehdit eden yapısal bir soruna dönüşmektedir.",
+                choices: {
+                    A: "Doğum oranlarındaki düşüş, sosyal güvenlik sistemleri üzerinde herhangi bir baskı yaratmamaktadır.",
+                    B: "Azalan doğum oranları ile yaşlanan nüfus birlikte, sosyal güvenlik sistemlerinin sürdürülebilirliğini zorlayan bir sorun oluşturmaktadır.",
+                    C: "Yaşlanan nüfus sorunu, yalnızca doğum oranı yüksek olan ülkelerde görülmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Sürdürülebilirlik", definition: "Bir sistemin uzun vadede işlevini kaybetmeden devam edebilme kapasitesi." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), iki faktörün (düşük doğum, yaşlı nüfus) birlikte yarattığı yapısal sorunu doğru özetler.",
+                    trapA: "A seçeneği metnin açıkça belirttiği tehdidi yok sayarak çelişki oluşturur.",
+                    trapC: "C seçeneği sorunu doğum oranı yüksek ülkelere atfederek metnin mantığını tersine çevirir."
+                }
+            },
+            {
+                id: 147,
+                levelText: "Seviye: C1 (Arkeoloji & Tarih)",
+                sentence: "Yeni bulunan tabletlerin çözümlenmesi, antik uygarlıkların ticaret ağlarının daha önce sanıldığından çok daha geniş bir coğrafyaya yayıldığını ortaya koymuştur.",
+                choices: {
+                    A: "Antik uygarlıkların ticaret ağları, çözümlenen tabletler sayesinde önceki tahminlerden daha geniş bir alana yayıldığı anlaşılmıştır.",
+                    B: "Yeni bulunan tabletler, antik uygarlıkların ticaret yapmadığını kanıtlamıştır.",
+                    C: "Tabletlerin çözümlenmesi, uygarlıkların coğrafi sınırları hakkında herhangi bir yeni bilgi sunmamıştır."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Çözümlemek", definition: "Bir yazı veya kodun anlamını ortaya çıkarmak, deşifre etmek." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (A), tabletlerin ortaya çıkardığı yeni coğrafi bilgiyi doğru yansıtır.",
+                    trapB: "B seçeneği metnin tam tersini, yani ticaretin varlığını değil yokluğunu iddia eder.",
+                    trapC: "C seçeneği metnin sunduğu yeni bilgiyi doğrudan reddeder."
+                }
+            },
+            {
+                id: 148,
+                levelText: "Seviye: C1 (Girişimcilik & Yatırım)",
+                sentence: "Yeni kurulan girişimlerin ilk yıllarda kâr elde etmekten çok pazar payı büyütmeye odaklanması, uzun vadeli sürdürülebilirlik açısından yatırımcılar arasında tartışmalı bir strateji olarak değerlendirilmektedir.",
+                choices: {
+                    A: "Girişimlerin pazar payı büyütmeye odaklanması, tüm yatırımcılar tarafından ideal bir strateji olarak kabul edilmektedir.",
+                    B: "İlk yıllarda kârdan çok pazar payına odaklanan girişim stratejisi, yatırımcılar arasında tartışmalı bulunmaktadır.",
+                    C: "Girişimlerin sürdürülebilirliği, yalnızca ilk yıllardaki kâr oranına bağlıdır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Pazar payı", definition: "Bir şirketin toplam pazar içindeki satış veya müşteri oranı." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), stratejinin tartışmalı doğasını doğru biçimde yansıtır.",
+                    trapA: "A seçeneği metnin belirttiği tartışmalı niteliği yok sayarak stratejiyi genel kabul görmüş gibi sunar.",
+                    trapC: "C seçeneği sürdürülebilirliği tek bir faktöre (ilk yıl kârı) indirgeyerek metni aşırı basitleştirir."
+                }
+            },
+            {
+                id: 149,
+                levelText: "Seviye: C1 (Biyoçeşitlilik & Ormancılık)",
+                sentence: "Tek tür ağaçlandırma uygulamalarının hızlı orman kazanımı sağlaması takdir edilse de bu yöntemin doğal biyoçeşitliliği desteklemekten uzak olduğu uzmanlarca sıkça dile getirilmektedir.",
+                choices: {
+                    A: "Tek tür ağaçlandırma, hem hızlı orman kazanımı sağlamakta hem de biyoçeşitliliği en üst düzeyde desteklemektedir.",
+                    B: "Hızlı orman kazanımı sağlayan tek tür ağaçlandırma, biyoçeşitliliği yeterince desteklememektedir.",
+                    C: "Uzmanlar, biyoçeşitliliğin orman kazanımıyla hiçbir ilişkisi olmadığını savunmaktadır."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Biyoçeşitlilik", definition: "Bir bölgedeki canlı türlerinin çeşitliliği ve zenginliği." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), hızlı kazanım avantajı ile biyoçeşitlilik konusundaki eksikliği dengeli biçimde sunar.",
+                    trapA: "A seçeneği metnin belirttiği eksikliği yok sayarak iki özelliği birlikte mükemmel gösterir.",
+                    trapC: "C seçeneği metinde kurulan ilişkiyi (ağaçlandırma yöntemi-biyoçeşitlilik) tamamen reddeder."
+                }
+            },
+            {
+                id: 150,
+                levelText: "Seviye: C1 (Dilbilim & Gelişim Psikolojisi)",
+                sentence: "Çocukların iki dilli ortamda büyümesinin bilişsel esnekliklerini artırdığına dair bulgular çoğalsa da bu sürecin kelime dağarcığı gelişiminde tek dilli akranlarına kıyasla geçici bir gecikmeye yol açabildiği de gözlemlenmektedir.",
+                choices: {
+                    A: "İki dilli büyüyen çocuklar, bilişsel esneklik ve kelime dağarcığı gelişiminde her açıdan tek dilli akranlarını geride bırakmaktadır.",
+                    B: "İki dillilik bilişsel esnekliği artırırken kelime dağarcığı gelişiminde geçici bir gecikmeye de neden olabilmektedir.",
+                    C: "Kelime dağarcığındaki gecikme, iki dilli çocuklarda kalıcı ve geri döndürülemez bir sorundur."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Bilişsel esneklik", definition: "Zihnin farklı görevler ve bakış açıları arasında geçiş yapabilme yeteneği." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), iki dilliliğin hem olumlu (esneklik) hem de sınırlı olumsuz (geçici gecikme) yönünü dengeli sunar.",
+                    trapA: "A seçeneği metnin belirttiği geçici gecikmeyi göz ardı ederek iki dilli çocukları her açıdan üstün gösterir.",
+                    trapC: "C seçeneği metindeki 'geçici' niteliğini 'kalıcı' olarak çarpıtır."
+                }
+            },
+            {
+                id: 151,
+                levelText: "Seviye: C1 (Sağlık Politikası & İletişim)",
+                sentence: "Aşı tereddüdünün toplumda yayılmasında sosyal medyadaki yanlış bilgilendirmenin payı büyük olsa da sağlık otoritelerinin şeffaf ve zamanında bilgilendirme yapmamasının da bu güvensizliği beslediği unutulmamalıdır.",
+                choices: {
+                    A: "Aşı tereddüdünün tek nedeni sosyal medyadaki yanlış bilgilendirmedir.",
+                    B: "Aşı tereddüdü yalnızca sağlık otoritelerinin bilgilendirme eksikliğinden kaynaklanmaktadır.",
+                    C: "Sosyal medyadaki yanlış bilgi kadar otoritelerin yetersiz bilgilendirmesi de aşı tereddüdünü beslemektedir."
+                },
+                correct: "C",
+                vocabulary: [
+                    { term: "Tereddüt", definition: "Bir konuda karar vermekte yaşanan kararsızlık, çekince." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (C), metindeki iki nedeni (yanlış bilgi ve yetersiz bilgilendirme) birlikte doğru yansıtır.",
+                    trapA: "A seçeneği nedeni tek bir kaynağa (sosyal medya) indirgeyerek metindeki ikinci nedeni göz ardı eder.",
+                    trapB: "B seçeneği ise nedeni yalnızca otoritelere yükleyerek sosyal medyanın payını yok sayar."
+                }
+            },
+            {
+                id: 152,
+                levelText: "Seviye: C1 (Kentsel Dönüşüm & Sosyal Adalet)",
+                sentence: "Deprem riski taşıyan bina stokunun yenilenmesini hedefleyen kentsel dönüşüm projeleri güvenlik açısından gerekli görülse de yerinden edilen düşük gelirli hanelerin yeni konut maliyetlerini karşılayamaması sosyal adalet tartışmalarını beraberinde getirmektedir.",
+                choices: {
+                    A: "Kentsel dönüşüm projeleri, tüm hanelerin konut maliyetlerini eşit biçimde karşılamasını sağlamaktadır.",
+                    B: "Güvenlik amacıyla yürütülen kentsel dönüşüm, düşük gelirli haneler için maliyet kaynaklı sosyal adalet sorunları doğurabilmektedir.",
+                    C: "Deprem riski, yalnızca kentsel dönüşüm projeleriyle tamamen ortadan kaldırılabilmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Yerinden edilmek", definition: "Bir kişinin yaşadığı yeri istemeden veya zorunlu olarak terk etmesi." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), güvenlik amacı ile sosyal adalet sorununu birlikte dengeli biçimde sunar.",
+                    trapA: "A seçeneği metnin belirttiği maliyet sorununu göz ardı ederek tam tersini iddia eder.",
+                    trapC: "C seçeneği deprem riskinin tamamen ortadan kalkacağını iddia ederek metinde olmayan bir kesinlik ekler."
+                }
+            },
+            {
+                id: 153,
+                levelText: "Seviye: C1 (Uzay Ekonomisi)",
+                sentence: "Özel şirketlerin uzay taşımacılığına girmesiyle fırlatma maliyetlerinin düşmesi bilimsel araştırmalara erişimi kolaylaştırsa da uzay çöpü birikiminin hızlanması yörüngedeki uydular için yeni bir tehlike oluşturmaktadır.",
+                choices: {
+                    A: "Özel şirketlerin uzay taşımacılığına girmesi, uzay çöpü sorununu tamamen çözmüştür.",
+                    B: "Fırlatma maliyetlerinin düşmesi bilimsel erişimi kolaylaştırırken yörüngedeki uydular için çöp birikimi riski de artmaktadır.",
+                    C: "Yörüngedeki uydular, uzay çöpünden bağımsız olarak yalnızca maliyet artışından etkilenmektedir."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Yörünge", definition: "Bir gök cisminin veya uydunun bir merkez etrafında izlediği yol." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), maliyet avantajı ile çöp birikimi riskini birlikte doğru yansıtır.",
+                    trapA: "A seçeneği metnin belirttiği artan riski tersine çevirerek 'sorunun çözüldüğünü' iddia eder.",
+                    trapC: "C seçeneği uyduların etkilendiği asıl unsuru (uzay çöpü) göz ardı ederek yanlış bir neden sunar."
+                }
+            },
+            {
+                id: 154,
+                levelText: "Seviye: C1 (İletişim & Sosyal Medya)",
+                sentence: "Kısa video formatlarının dikkat sürelerini kısalttığına dair endişeler artarken bu formatların aynı zamanda karmaşık konuları geniş kitlelere erişilebilir biçimde aktarabilme potansiyeli de göz ardı edilmemelidir.",
+                choices: {
+                    A: "Kısa video formatları, yalnızca dikkat sürelerini kısaltan zararlı bir araç olarak değerlendirilmelidir.",
+                    B: "Kısa videolar dikkat süreleriyle ilgili endişe yaratsa da karmaşık konuları geniş kitlelere ulaştırma potansiyeli taşımaktadır.",
+                    C: "Karmaşık konuların geniş kitlelere aktarılması, yalnızca uzun video formatlarıyla mümkündür."
+                },
+                correct: "B",
+                vocabulary: [
+                    { term: "Erişilebilir", definition: "Kolayca ulaşılabilir, anlaşılabilir hâle getirilmiş." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (B), endişe ile potansiyel faydayı bir arada dengeli biçimde sunar.",
+                    trapA: "A seçeneği metnin belirttiği potansiyel faydayı göz ardı ederek tek taraflı bir yargıya varır.",
+                    trapC: "C seçeneği metnin doğrudan reddettiği bir sınırlamayı (yalnızca uzun formatla mümkün olma) savunur."
+                }
+            },
+            {
+                id: 155,
+                levelText: "Seviye: C1 (Çevre & Deniz Ekolojisi)",
+                sentence: "Okyanuslardaki mikroplastik kirliliğinin deniz canlılarının besin zincirine girerek insan sağlığını dolaylı yoldan etkileme ihtimali, bilim insanlarını bu kirlilik türünü daha yakından izlemeye yöneltmiştir.",
+                choices: {
+                    A: "Mikroplastik kirliliğinin insan sağlığına dolaylı etkisi ihtimali, bilim insanlarının bu konuyu daha yakından takip etmesine yol açmıştır.",
+                    B: "Mikroplastikler, besin zincirine girmeden doğrudan insan sağlığını etkilemektedir.",
+                    C: "Deniz canlıları, mikroplastik kirliliğinden hiçbir şekilde etkilenmemektedir."
+                },
+                correct: "A",
+                vocabulary: [
+                    { term: "Besin zinciri", definition: "Canlıların birbirini besin olarak tükettiği doğal döngü." }
+                ],
+                analysis: {
+                    right: "Doğru seçenek (A), kirliliğin insan sağlığına etkisi ihtimalinin bilimsel takibe yol açtığı bilgisini doğru yansıtır.",
+                    trapB: "B seçeneği metindeki 'besin zincirine girerek dolaylı etki' ifadesini yanlışlıkla 'doğrudan etki' olarak değiştirir.",
+                    trapC: "C seçeneği metnin temel öncülünü (deniz canlılarının etkilenmesi) doğrudan reddeder."
+                }
+            }
+        ];
+
+        // Numéro fixe et invariable de chaque question (1 à 55), basé sur sa position dans la base.
+        masterQuestionDatabase.forEach((q, i) => { q.number = i + 1; });
+        const TOTAL_QUESTIONS = masterQuestionDatabase.length;
+
+        let currentSeries = [];
+        let userAnswers = {};
+        let score = 0;
+        let incorrectQuestionsGlobal = []; // Keep track of missed questions across sessions
+        let isReviewMode = false;
+
+        // Curseur de progression séquentielle : index (dans masterQuestionDatabase) de la prochaine
+        // question à distribuer. Revient à 0 une fois les 55 questions épuisées.
+        let dbCursor = 0;
+        // Vrai si la série qui vient d'être générée correspond à la toute fin de la base (55e question incluse).
+        let justCompletedDatabase = false;
+
+        // --- Persistence (localStorage) ---
+        const STORAGE_KEY = 'c1_quiz_progress_v1';
+
+        function saveState() {
+            const state = {
+                seriesIds: currentSeries.map(q => q.id),
+                userAnswers,
+                score,
+                incorrectIds: incorrectQuestionsGlobal.map(q => q.id),
+                isReviewMode,
+                dbCursor
+            };
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable */ }
+        }
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return false;
+                const state = JSON.parse(raw);
+                if (!state.seriesIds || !state.seriesIds.length) return false;
+                const restoredSeries = state.seriesIds.map(id => masterQuestionDatabase.find(q => q.id === id)).filter(Boolean);
+                if (!restoredSeries.length) return false;
+
+                currentSeries = restoredSeries;
+                userAnswers = state.userAnswers || {};
+                score = state.score || 0;
+                incorrectQuestionsGlobal = (state.incorrectIds || []).map(id => masterQuestionDatabase.find(q => q.id === id)).filter(Boolean);
+                isReviewMode = !!state.isReviewMode;
+                dbCursor = typeof state.dbCursor === 'number' ? state.dbCursor : 0;
+
+                sectionTitle.textContent = isReviewMode ? "Hatalı Yapılan Soruları İnceleme Modu" : "C1 Düzeyi Sınav Oturumu (5 Soruluk Seri)";
+                sectionSubtitle.textContent = isReviewMode ? "Daha önce yanlış yanıtladığınız soruları tekrar gözden geçirin ve pekiştirin." : `Sıralı ilerleme: veri tabanındaki ${TOTAL_QUESTIONS} sorudan devam ediyorsunuz.`;
+
+                renderQuiz(true);
+                updateMistakeBadge();
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function resetProgress() {
+            try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+            incorrectQuestionsGlobal = [];
+            dbCursor = 0; // Repart du tout début de la base (question 1)
+            startNewSeries();
+        }
+
+        function exportData() {
+            const state = {
+                seriesIds: currentSeries.map(q => q.id),
+                userAnswers,
+                score,
+                incorrectIds: incorrectQuestionsGlobal.map(q => q.id),
+                isReviewMode,
+                dbCursor,
+                exportedAt: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `c1_sinav_yedek_${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importDataFile(fileInput) {
+            const file = fileInput.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const state = JSON.parse(e.target.result);
+                    if (!state.seriesIds || !Array.isArray(state.seriesIds)) {
+                        alert('Geçersiz yedek dosyası.');
+                        return;
+                    }
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                    if (!loadState()) {
+                        alert('Yedek dosyasındaki sorular mevcut veri tabanıyla eşleşmedi.');
+                    }
+                } catch (err) {
+                    alert('Dosya okunamadı. Geçerli bir JSON yedek dosyası seçtiğinizden emin olun.');
+                }
+            };
+            reader.readAsText(file);
+            fileInput.value = '';
+        }
+
+        const quizContainer = document.getElementById('quiz-container');
+        const scoreDisplay = document.getElementById('score-display');
+        const progressBar = document.getElementById('progress-bar');
+        const completionCard = document.getElementById('completion-card');
+        const completionMessage = document.getElementById('completion-message');
+        const reviewMistakesTab = document.getElementById('review-mistakes-tab');
+        const mistakeCountBadge = document.getElementById('mistake-count-badge');
+        const reviewTriggerBtn = document.getElementById('review-trigger-btn');
+        const sectionTitle = document.getElementById('section-title');
+        const sectionSubtitle = document.getElementById('section-subtitle');
+
+        function startNewSeries() {
+            isReviewMode = false;
+            sectionTitle.textContent = "C1 Düzeyi Sınav Oturumu (5 Soruluk Seri)";
+            sectionSubtitle.textContent = `Sıralı ilerleme: veri tabanındaki ${TOTAL_QUESTIONS} sorudan devam ediyorsunuz.`;
+
+            // Tirage séquentiel (plus aléatoire) : on prend les 5 prochaines questions à partir du curseur.
+            if (dbCursor >= TOTAL_QUESTIONS) dbCursor = 0; // sécurité
+            const seriesSize = Math.min(5, TOTAL_QUESTIONS - dbCursor);
+            currentSeries = masterQuestionDatabase.slice(dbCursor, dbCursor + seriesSize);
+
+            dbCursor += seriesSize;
+            if (dbCursor >= TOTAL_QUESTIONS) {
+                dbCursor = 0; // Les 55 questions ont été distribuées : la prochaine série repartira de la question 1
+                justCompletedDatabase = true;
+            } else {
+                justCompletedDatabase = false;
+            }
+
+            renderQuiz();
+            saveState();
+        }
+
+        function toggleReviewMode() {
+            if (incorrectQuestionsGlobal.length === 0) return;
+            isReviewMode = !isReviewMode;
+
+            if (isReviewMode) {
+                sectionTitle.textContent = "Hatalı Yapılan Soruları İnceleme Modu";
+                sectionSubtitle.textContent = "Daha önce yanlış yanıtladığınız soruları tekrar gözden geçirin ve pekiştirin.";
+                currentSeries = [...incorrectQuestionsGlobal];
+                renderQuiz();
+                saveState();
+            } else {
+                startNewSeries();
+            }
+        }
+
+        function renderQuiz(restoring = false) {
+            if (!restoring) {
+                userAnswers = {};
+                score = 0;
+            }
+            scoreDisplay.textContent = `${score} / ${currentSeries.length}`;
+            progressBar.style.width = '0%';
+            completionCard.classList.add('hidden');
+            quizContainer.innerHTML = '';
+
+            currentSeries.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700 transition-all';
+                questionCard.id = `question-card-${q.id}`;
+
+                let vocabHtml = q.vocabulary.map(v => `<span class="inline-block bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs px-2.5 py-1 rounded-lg mr-2 mb-2" title="${v.definition}"><strong>${v.term}:</strong> ${v.definition}</span>`).join('');
+                let trapHtml = Object.entries(q.analysis).filter(([k]) => k !== 'right').map(([, v]) => `<li>${v}</li>`).join('');
+
+                questionCard.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-3 py-1 rounded-full">${q.levelText}</span>
+                        <span class="text-xs text-slate-400 font-medium">Soru ${q.number} / ${TOTAL_QUESTIONS}</span>
+                    </div>
+
+                    <div class="mb-6 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <p class="text-base md:text-lg font-medium leading-relaxed italic text-slate-700 dark:text-slate-200">"${q.sentence}"</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <p class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3">Bu cümleye dayanarak aşağıdaki yargılardan hangisine ulaşılabilir?</p>
+                        <div class="space-y-3" id="options-container-${q.id}">
+                            ${Object.entries(q.choices).map(([key, text]) => `
+                                <label class="flex items-start p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 cursor-pointer transition option-label-${q.id}-${key}">
+                                    <input type="radio" name="question-${q.id}" value="${key}" class="mt-1 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-300 dark:border-slate-600" onchange="selectOption(${q.id}, '${key}')">
+                                    <span class="ml-3 text-sm font-medium"><strong class="mr-1.5 text-emerald-600 dark:text-emerald-400">${key})</strong>${text}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-100 dark:border-slate-700">
+                        <div class="flex flex-wrap items-center">
+                            <span class="text-xs font-semibold text-slate-400 mr-2 mb-1">Kritik Kelimeler:</span>
+                            <div>${vocabHtml}</div>
+                        </div>
+                        <button id="submit-btn-${q.id}" onclick="submitAnswer(${q.id})" disabled class="bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 font-medium px-5 py-2.5 rounded-xl text-sm transition cursor-not-allowed">
+                            Cevapla
+                        </button>
+                    </div>
+
+                    <!-- Correction Area (Hidden Initially) -->
+                    <div id="correction-${q.id}" class="hidden mt-6 pt-6 border-t border-dashed border-slate-200 dark:border-slate-700 space-y-4">
+                        <div id="feedback-banner-${q.id}" class="p-4 rounded-xl font-semibold text-sm flex items-center gap-2"></div>
+                        <div class="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl space-y-3 text-sm border border-slate-200 dark:border-slate-700">
+                            <p><strong>Doğru Cevap Anahtarı:</strong> <span class="text-emerald-600 dark:text-emerald-400 font-bold">${q.correct}</span></p>
+                            <p><strong>Doğru Yargı Analizi:</strong> ${q.analysis.right}</p>
+                            <p><strong>Çeldirici Tuzak Analizi:</strong></p>
+                            <ul class="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-300">
+                                ${trapHtml}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                quizContainer.appendChild(questionCard);
+            });
+
+            if (restoring) {
+                const answeredIds = Object.keys(userAnswers);
+                answeredIds.forEach(qIdStr => {
+                    const q = currentSeries.find(item => item.id === Number(qIdStr));
+                    if (q) applyAnsweredState(q, userAnswers[qIdStr]);
+                });
+                const progressPercent = (answeredIds.length / currentSeries.length) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                if (answeredIds.length === currentSeries.length && currentSeries.length > 0) {
+                    showCompletion();
+                }
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function selectOption(qId, key) {
+            userAnswers[qId] = key;
+            const submitBtn = document.getElementById(`submit-btn-${qId}`);
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-400', 'dark:text-slate-500', 'cursor-not-allowed');
+            submitBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'text-white', 'shadow-md', 'cursor-pointer');
+
+            ['A', 'B', 'C'].forEach(optKey => {
+                const label = document.querySelector(`.option-label-${qId}-${optKey}`);
+                if (optKey === key) {
+                    label.classList.add('border-emerald-500', 'bg-emerald-50/50', 'dark:bg-emerald-900/10');
+                } else {
+                    label.classList.remove('border-emerald-500', 'bg-emerald-50/50', 'dark:bg-emerald-900/10');
+                }
+            });
+        }
+
+        function applyAnsweredState(q, selected) {
+            const isCorrect = (selected === q.correct);
+            const submitBtn = document.getElementById(`submit-btn-${q.id}`);
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            submitBtn.textContent = 'Cevaplandı';
+
+            document.querySelectorAll(`input[name="question-${q.id}"]`).forEach(input => {
+                input.disabled = true;
+                if (input.value === selected) input.checked = true;
+            });
+
+            ['A', 'B', 'C'].forEach(optKey => {
+                const label = document.querySelector(`.option-label-${q.id}-${optKey}`);
+                label.classList.remove('hover:border-emerald-500', 'cursor-pointer');
+                if (optKey === q.correct) {
+                    label.classList.add('border-green-500', 'bg-green-50', 'dark:bg-green-900/20', 'text-green-900', 'dark:text-green-200');
+                } else if (optKey === selected && !isCorrect) {
+                    label.classList.add('border-red-500', 'bg-red-50', 'dark:bg-red-900/20', 'text-red-900', 'dark:text-red-200');
+                } else {
+                    label.classList.add('opacity-60');
+                }
+            });
+
+            const correctionDiv = document.getElementById(`correction-${q.id}`);
+            const feedbackBanner = document.getElementById(`feedback-banner-${q.id}`);
+
+            if (isCorrect) {
+                feedbackBanner.className = 'p-4 rounded-xl font-semibold text-sm flex items-center gap-2 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300';
+                feedbackBanner.innerHTML = `<svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Tebrikler! Doğru cevap.`;
+            } else {
+                feedbackBanner.className = 'p-4 rounded-xl font-semibold text-sm flex items-center gap-2 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300';
+                feedbackBanner.innerHTML = `<svg class="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>Yanlış cevap. Doğru seçenek: ${q.correct}`;
+            }
+
+            correctionDiv.classList.remove('hidden');
+        }
+
+        function submitAnswer(qId) {
+            const q = currentSeries.find(item => item.id === qId);
+            const selected = userAnswers[qId];
+            if (!selected) return;
+
+            const isCorrect = (selected === q.correct);
+            if (isCorrect) {
+                score++;
+                scoreDisplay.textContent = `${score} / ${currentSeries.length}`;
+                // If answered correctly in review mode, remove from incorrect list
+                incorrectQuestionsGlobal = incorrectQuestionsGlobal.filter(item => item.id !== q.id);
+            } else {
+                // Add to incorrect list if not already present
+                if (!incorrectQuestionsGlobal.some(item => item.id === q.id)) {
+                    incorrectQuestionsGlobal.push(q);
+                }
+            }
+
+            updateMistakeBadge();
+
+            // Update Progress Bar
+            const answeredCount = Object.keys(userAnswers).length;
+            const progressPercent = (answeredCount / currentSeries.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            applyAnsweredState(q, selected);
+            saveState();
+
+            if (answeredCount === currentSeries.length) {
+                setTimeout(showCompletion, 800);
+            }
+        }
+
+        function updateMistakeBadge() {
+            const count = incorrectQuestionsGlobal.length;
+            mistakeCountBadge.textContent = count;
+            document.getElementById('modal-mistake-count').textContent = count;
+
+            if (count > 0) {
+                reviewMistakesTab.classList.remove('hidden');
+                reviewTriggerBtn.classList.remove('hidden');
+            } else {
+                reviewMistakesTab.classList.add('hidden');
+                reviewTriggerBtn.classList.add('hidden');
+            }
+        }
+
+        function showCompletion() {
+            completionCard.classList.remove('hidden');
+            let message = `Oturum tamamlandı! ${currentSeries.length} sorudan ${score} tanesini doğru yanıtladınız.`;
+            if (score === currentSeries.length) {
+                message += " Kusursuz performans! Tüm soruları başarıyla tamamladınız.";
+            } else {
+                message += " Yanlış yaptığınız soruları 'Hatalı Soruları İncele' butonuna tıklayarak tekrar çalışabilirsiniz.";
+            }
+            if (justCompletedDatabase && !isReviewMode) {
+                message += ` Tebrikler, veri tabanındaki ${TOTAL_QUESTIONS} sorunun tamamını bitirdiniz! Yeni bir seri başlattığınızda 1. sorudan yeniden başlayacaksınız.`;
+            }
+            completionMessage.textContent = message;
+            completionCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initial launch: resume a saved session if one exists, otherwise start fresh
+        if (!loadState()) {
+            startNewSeries();
+        }
+    </script>
+</body>
+</html>
